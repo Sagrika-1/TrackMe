@@ -64,6 +64,8 @@ public class driverLogin extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
             return true;
         }
 
@@ -76,13 +78,14 @@ public class driverLogin extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_settings) {
+        if (id == R.id.nav_settings) {
             Intent i = new Intent(this,ChangeInfo.class);
             startActivity(i);
 
         } else if (id == R.id.nav_logout) {
+            Intent i = new Intent(this,managerLogin.class);
+            startActivity(i);
+
 
         } else if (id == R.id.nav_help) {
 
@@ -101,14 +104,14 @@ public class driverLogin extends AppCompatActivity
 
         editText1 = (EditText) findViewById(R.id.vehicled);
         stg = editText1.getText().toString();
-      /*  if (stg.equals("123456")) {
+       if (stg.equals("123456")) {
             Intent intentDr = new Intent(this, Location_new.class);
             startActivity(intentDr);
-        } else {*/
+        } else {
             Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
 
 
-      //  }
+      }
 
     }
 }

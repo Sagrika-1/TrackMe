@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -68,7 +69,7 @@ public class Verify extends AppCompatActivity
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"selected",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"selected",Toast.LENGTH_SHORT).show();
                 newText =  parent.getItemAtPosition(position).toString();
                 ID_l = newText;
 
@@ -111,6 +112,8 @@ public class Verify extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
             return true;
         }
 
@@ -123,11 +126,15 @@ public class Verify extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_settings) {
+        if (id == R.id.nav_settings) {
+            Intent i = new Intent(this,ChangeInfo.class);
+            startActivity(i);
+
 
         } else if (id == R.id.nav_logout) {
+            Intent i = new Intent(this,managerLogin.class);
+            startActivity(i);
+
 
         } else if (id == R.id.nav_help) {
 

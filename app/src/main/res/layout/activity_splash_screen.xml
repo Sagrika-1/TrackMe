@@ -27,9 +27,8 @@
         android:paddingTop="20dp"
         android:id="@+id/textview"
         android:text="POWERED BY GAIA SMART CITIES"
-        android:background="#fff"
         android:layout_below="@+id/imageView"
-        android:textColor="#00BCD4"
+        android:textColor="#0d47a1"
         android:textSize="15sp"/>
     </RelativeLayout>
 
