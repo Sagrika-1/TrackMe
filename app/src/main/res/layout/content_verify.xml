@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.sagrika.navigate.Verify"
+    tools:showIn="@layout/app_bar_verify">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ID"
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:id="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="138dp"
+        />
+    <Spinner
+        android:layout_width="380dp"
+        android:layout_height="47dp"
+        android:layout_marginLeft="20dp"
+
+        android:id="@+id/spinner"
+
+        android:layout_centerHorizontal="true"
+        android:dropDownWidth="fill_parent"
+        android:layout_marginTop="15dp"
+        android:clickable="true"
+        android:layout_below="@+id/textView"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Id_vehicle"
+        android:background="#009688"
+        android:layout_below="@+id/spinner"
+        android:textColor="#fff"
+        android:layout_above="@+id/verified"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:text="Track fleet"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"
+        android:background="#fff"
+        android:layout_marginTop="250dp"
+        android:textSize="20sp"
+        android:onClick="options_go"
+        android:id="@+id/verified" />
+
+</RelativeLayout>

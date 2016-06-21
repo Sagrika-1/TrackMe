@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Navigate</string>
+
+    <string name="list_id">List ID</string>
+    <string-array name="list_ids">
+        <item>DL 37 HN 4958</item>
+        <item>DL 47 HN 2985</item>
+        <item>DL 28 GE 1452</item>
+        <item>DL 58 LE 1452</item>
+        <item>DL 87 KE 1452</item>
+        <item>DL 81 ND 7487</item>
+        <item>DL 45 ZF 7514</item>
+        <item>DL 85 CP 9514</item>
+        <item>DL 23 HC 7514</item>
+
+    </string-array>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_home">Home</string>
+    <string name="title_activity_manager_login">Manager Login</string>
+    <string name="title_activity_driver_login">Driver Login</string>
+    <string name="title_activity_verify">Verify</string>
+    <string name="title_activity_options">Options</string>
+    <string name="title_activity_location_new">Map</string>
+    <string name="title_activity_change_info">Change Info</string>
+    <string name="title_activity_forgot">Forgot Password?</string>
+</resources>
