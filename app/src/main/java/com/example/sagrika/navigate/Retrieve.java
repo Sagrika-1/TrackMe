@@ -26,7 +26,7 @@ import java.net.URLEncoder;
  */
 public class Retrieve extends AsyncTask<String, Void, String> {
 
-
+    String result = "jsonstring";
     String method, name, username = null, password;
     int len;
     Context ctx;
@@ -109,50 +109,60 @@ public class Retrieve extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String response) {
 
-        //  Toast.makeText(ctx,response, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(ctx,response, Toast.LENGTH_SHORT).show();
       JSONObject jsonObject;
         JSONArray jsonArray;
         // InfoAdapter infoAdapter = null;
-        String json_string = response;
+        //String json_string = response;
         try {
-            jsonObject = new JSONObject(json_string);
-            jsonArray = jsonObject.getJSONArray("jsonstring");
-            int count = 0, counter = 0;
-            count = jsonArray.length();
+            jsonObject = new JSONObject(response);
+
+           jsonArray = jsonObject.getJSONArray("jsonstring");
+
+            int count = 0;
+            while (count < jsonArray.length()) {
+                JSONObject JO = jsonArray.getJSONObject(count);
+                String jsonstring = jsonObject.getString("jsonstring");
+           if(jsonstring =="p"){
+               Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
+           }
+            else if(jsonstring =="us"){
+               Toast.makeText(ctx, "Incorrect Password", Toast.LENGTH_SHORT).show();
+           }
+            else{
+              // name = jsonObject.getString("name");
+              // username = jsonObject.getString("username");
+               //Toast.makeText(ctx, "Welcome " + username, Toast.LENGTH_SHORT).show();
+               Intent intent = new Intent(ctx, Verify.class);
+               intent.putExtra("id", username);
+               ctx.startActivity(intent);
+           }
 
 
-            while (counter < count) {
-                JSONObject JO = jsonArray.getJSONObject(counter);
 
-                if (count == 2) {
-                    Toast.makeText(ctx, "Username doesn't exist", Toast.LENGTH_SHORT).show();
-                } else if (count == 1) {
 
-                    Toast.makeText(ctx, "Invalid Password", Toast.LENGTH_SHORT).show();
-                } else {
-                    //  name = JO.getString("name");
-                    username = JO.getString("username");
-                    len = username.length();
-                    if (len == 0) {
-                        Toast.makeText(ctx, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
-                    }
 
-                    //    Info info = new Info(name,username);
-                    // infoAdapter.add(info);
-
-                    else {
-                        counter++;
-                        Toast.makeText(ctx, "Welcome " + username, Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(ctx, Verify.class);
-                        intent.putExtra("id", username);
-                        ctx.startActivity(intent);
-                    }
+                //  name = JO.getString("name");
+              /*  username = JO.getString("username");
+                len = username.length();
+                if (len == 0) {
+                    Toast.makeText(ctx, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
                 }
-            }
-            }catch(JSONException e){
-                e.printStackTrace();
-            }
 
+                //    Info info = new Info(name,username);
+                // infoAdapter.add(info);
+
+                else {
+                    count++;
+                    Toast.makeText(ctx, "Welcome " + username, Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(ctx, Verify.class);
+                    intent.putExtra("id", username);
+                    ctx.startActivity(intent);
+                }*/
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

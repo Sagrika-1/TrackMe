@@ -13,9 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class Forgot extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    EditText TFemail,TFmobile;
+    int e,m;
+    String TFmail,TFphone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +28,6 @@ public class Forgot extends AppCompatActivity
         setContentView(R.layout.activity_forgot);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -104,4 +100,28 @@ public class Forgot extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+public void onSubmit(View view){
+
+    TFemail = (EditText)findViewById(R.id.TFemail);
+    TFmobile = (EditText)findViewById(R.id.TFmobile);
+    TFmail = TFemail.getText().toString().trim();
+    TFphone = TFmobile.getText().toString().trim();
+    e= TFmail.length();
+    m= TFphone.length();
+    if(e==0 && m<10){
+        TFmobile.setError("Enter correct Phone number");
+    }
+    else if(m==10 && e==0){
+
+    }
+    else if(m==0 && e!=0){
+
+    }
+    else if(m==0 && e==0) {
+        TFemail.setError("Enter Email ID");
+        TFmobile.setError("Enter correct Phone number");
+    }
+}
+
+
 }

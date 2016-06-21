@@ -38,14 +38,6 @@ public class managerLogin extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -128,18 +120,19 @@ public class managerLogin extends AppCompatActivity
         Button login = (Button) findViewById(R.id.login);
         // TextView attempts = (TextView) findViewById(R.id.attempts);
         //TextView numAttempt = (TextView) findViewById(R.id.numAttempt);
-        login_name = userName.getText().toString();
-        login_pass = userPassword.getText().toString();
+        login_name = userName.getText().toString().trim();
+        login_pass = userPassword.getText().toString().trim();
         int a=login_name.length(),b=login_pass.length();
         String method = "login";
         if (a==0 && b==0) {
-            Toast.makeText(getApplicationContext(), "Enter Username and Password", Toast.LENGTH_SHORT).show();
+           userName.setError("Username Required");
+            userPassword.setError("Password Required");
         }
         else if(a==0){
-            Toast.makeText(getApplicationContext(), "Enter Username", Toast.LENGTH_SHORT).show();
+            userName.setError("Username Required");
         }
         else if(b==0){
-            Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+            userPassword.setError("Password Required");
         }
         else {
 
