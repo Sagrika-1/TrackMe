@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,41 +12,30 @@
     tools:context="com.example.sagrika.navigate.Verify"
     tools:showIn="@layout/app_bar_verify">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID"
+        android:text="Select shipment ID:"
         android:textSize="20sp"
-        android:textColor="#000"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:id="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp"
-        />
+        android:layout_marginTop="120dp"/>
+
     <Spinner
         android:layout_width="380dp"
         android:layout_height="47dp"
-        android:layout_marginLeft="20dp"
-
         android:id="@+id/spinner"
-
         android:layout_centerHorizontal="true"
         android:dropDownWidth="fill_parent"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:clickable="true"
-        android:layout_below="@+id/textView"
-
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Id_vehicle"
-        android:background="#009688"
-        android:layout_below="@+id/spinner"
-        android:textColor="#fff"
-        android:layout_above="@+id/verified"/>
-
+        android:layout_below="@+id/textView"/>
 
     <Button
         android:layout_width="match_parent"
@@ -60,4 +49,5 @@
         android:onClick="options_go"
         android:id="@+id/verified" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

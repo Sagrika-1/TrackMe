@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,77 +12,83 @@
     tools:context="com.example.sagrika.navigate.Forgot"
     tools:showIn="@layout/app_bar_forgot">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/TVusername"
-        android:layout_marginTop="46dp"
-        android:textColor="#000"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:textAppearance = "?android:textAppearanceLarge"
-        android:text="Email Id"/>
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="47dp"
-        android:id="@+id/userName"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="120dp"
-        android:inputType="textEmailAddress"
-        android:nextFocusForward="@+id/..."
-        android:singleLine="true"
-        android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:textColor="#000"
-        android:maxLength="14"
-        android:paddingTop="15dp"
-        android:maxLines="1" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/TVpassword"
-        android:layout_marginTop="199dp"
-        android:textColor="#000"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:textAppearance = "?android:textAppearanceLarge"
-        android:layout_below="@+id/userName"
-        android:text="Password"/>
-
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:inputType="textPassword"
-        android:layout_marginTop="261dp"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Enter your Email ID or registered Mobile Number to reset your password"
         android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:textColorHint="#fff"
-        android:textColor="#000"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        android:id="@+id/TVreset"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Email ID"
+        android:id="@+id/TVemail"
+        android:layout_below="@+id/TVreset"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="55dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
         android:ems="10"
-        android:paddingTop="15dp"
-        android:singleLine="true"
-        android:id="@+id/userPassword"
-        android:maxLength="8"
-        android:maxLines="1" />
+        android:id="@+id/TFmobile"
+        android:layout_below="@+id/TVmobile"
+        android:layout_alignStart="@+id/TVmobile" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Mobile Number"
+        android:id="@+id/TVmobile"
+        android:layout_marginTop="51dp"
+        android:layout_below="@+id/TVor"
+        android:layout_alignStart="@+id/TFemail" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/TFemail"
+        android:layout_below="@+id/TVemail"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="OR"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:id="@+id/TVor"
+        android:layout_marginTop="51dp"
+        android:layout_below="@+id/TFemail"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:text="go"
-        android:textColor="#000"
-        android:background="#fff"
-        android:id="@+id/login"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="330dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:id="@+id/Bsubmit"
+        android:onClick="onSubmit"
+        android:layout_below="@+id/TFmobile"
         android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:layout_gravity="bottom"
-       />
+        android:layout_marginTop="57dp" />
 
-
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
