@@ -92,11 +92,12 @@
         android:textAllCaps="false"
         android:layout_below="@+id/login"
         android:id="@+id/button2"
-        android:background="@color/colorPrimaryDark"
+        android:background="#bbdefb"
+
         android:layout_centerHorizontal="true"
         android:onClick="forgot"
         android:layout_marginTop="10dp"
-        android:textColor="#fff"/>
+        android:textColor="#0d47a1"/>
     ]
 
 
