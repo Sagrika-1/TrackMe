@@ -79,7 +79,7 @@
         android:background="@color/colorPrimaryDark"
         android:id="@+id/login"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="330dp"
+        android:layout_marginTop="370dp"
         android:layout_centerHorizontal="true"
         android:textSize="20sp"
         android:layout_gravity="bottom"
@@ -92,13 +92,11 @@
         android:textAllCaps="false"
         android:layout_below="@+id/login"
         android:id="@+id/button2"
-        android:background="#bbdefb"
-
+        android:background="@android:color/transparent"
         android:layout_centerHorizontal="true"
         android:onClick="forgot"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:textColor="#0d47a1"/>
-    ]
 
 
 </RelativeLayout>
