@@ -117,31 +117,42 @@ public class Retrieve extends AsyncTask<String, Void, String> {
         try {
             jsonObject = new JSONObject(json_string);
             jsonArray = jsonObject.getJSONArray("jsonstring");
-            int count = 0;
+            int count = 0, counter = 0;
+            count = jsonArray.length();
 
-            while (count < jsonArray.length()) {
-                JSONObject JO = jsonArray.getJSONObject(count);
-                //  name = JO.getString("name");
-                username = JO.getString("username");
-                len = username.length();
-                if (len == 0) {
-                    Toast.makeText(ctx, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
-                }
 
-                //    Info info = new Info(name,username);
-                // infoAdapter.add(info);
+            while (counter < count) {
+                JSONObject JO = jsonArray.getJSONObject(counter);
 
-                else {
-                    count++;
-                    Toast.makeText(ctx, "Welcome " + username, Toast.LENGTH_SHORT).show();
+                if (count == 2) {
+                    Toast.makeText(ctx, "Username doesn't exist", Toast.LENGTH_SHORT).show();
+                } else if (count == 1) {
 
-                    Intent intent = new Intent(ctx, Verify.class);
-                    intent.putExtra("id", username);
-                    ctx.startActivity(intent);
+                    Toast.makeText(ctx, "Invalid Password", Toast.LENGTH_SHORT).show();
+                } else {
+                    //  name = JO.getString("name");
+                    username = JO.getString("username");
+                    len = username.length();
+                    if (len == 0) {
+                        Toast.makeText(ctx, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
+                    }
+
+                    //    Info info = new Info(name,username);
+                    // infoAdapter.add(info);
+
+                    else {
+                        counter++;
+                        Toast.makeText(ctx, "Welcome " + username, Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(ctx, Verify.class);
+                        intent.putExtra("id", username);
+                        ctx.startActivity(intent);
+                    }
                 }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+
     }
 }
