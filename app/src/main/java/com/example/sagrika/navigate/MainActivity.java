@@ -80,18 +80,16 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void go(View view){
-        switch (view.getId()){
-            case R.id.manager:
-                Intent intentManager = new Intent(this,managerLogin.class);
-                startActivity(intentManager);
-                // Toast.makeText(getApplicationContext(), "You are Manager", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.driver:
+    public void go(View view) {
+
+        Intent intentManager = new Intent(this, managerLogin.class);
+        startActivity(intentManager);
+        //  break;
+    }
+    public void go_d(View view){
                 Intent intentDriver = new Intent(this,driverLogin.class);
                 startActivity(intentDriver);
-                //Toast.makeText(getApplicationContext(), "You are Driver", Toast.LENGTH_SHORT).show();
-                break;
+                //break;
         }
     }
-}
+

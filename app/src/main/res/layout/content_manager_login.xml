@@ -15,17 +15,15 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/TVusername"
-        android:layout_marginTop="46dp"
-        android:textColor="#000"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:textAppearance = "?android:textAppearanceLarge"
-        android:text="Username"/>
+        android:layout_marginTop="66dp"
+        android:id="@+id/userInput"
+        >
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="47dp"
@@ -33,27 +31,27 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="120dp"
         android:inputType="text"
+        android:hint="Username"
         android:nextFocusForward="@+id/..."
         android:singleLine="true"
         android:textSize="15sp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="8dp"
         android:textColor="#000"
         android:maxLength="14"
         android:paddingTop="15dp"
         android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/TVpassword"
-        android:layout_marginTop="199dp"
-        android:textColor="#000"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:textAppearance = "?android:textAppearanceLarge"
-        android:layout_below="@+id/userName"
-        android:text="Password"/>
+
+
+
+<android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_marginTop="30dp"
+    android:layout_below="@+id/userInput"
+    android:id="@+id/passInput">
 
     <EditText
         android:layout_width="match_parent"
@@ -61,8 +59,9 @@
         android:inputType="textPassword"
         android:layout_marginTop="261dp"
         android:textSize="15sp"
-        android:paddingLeft="10dp"
-        android:textColorHint="#fff"
+        android:paddingLeft="8dp"
+        android:hint="Password"
+        android:textColorHint="#000"
         android:textColor="#000"
         android:ems="10"
         android:paddingTop="15dp"
@@ -70,6 +69,7 @@
         android:id="@+id/userPassword"
         android:maxLength="8"
         android:maxLines="1" />
+</android.support.design.widget.TextInputLayout>
 
     <Button
         android:layout_width="match_parent"
@@ -79,7 +79,8 @@
         android:background="@color/white"
         android:id="@+id/login"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="370dp"
+       android:layout_below="@+id/passInput"
+        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
         android:textSize="20sp"
         android:layout_gravity="bottom"
@@ -88,11 +89,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@android:style/Widget.Holo.Button.Borderless.Small"
         android:text="Forgot Password?"
         android:textAllCaps="false"
         android:layout_below="@+id/login"
         android:id="@+id/button2"
-        android:background="@android:color/transparent"
         android:layout_centerHorizontal="true"
         android:onClick="forgot"
         android:layout_marginTop="40dp"

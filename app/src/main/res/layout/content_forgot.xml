@@ -28,24 +28,21 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Email ID"
-        android:id="@+id/TVemail"
-        android:layout_below="@+id/TVreset"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="55dp" />
-
+  <android.support.design.widget.TextInputLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/emailInput"
+      android:layout_marginTop="60dp"
+      android:layout_below="@+id/TVreset">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/TFemail"
-            android:layout_below="@+id/TVemail"
+            android:hint="Email Id"
             android:layout_alignParentStart="true" />
+  </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,32 +52,30 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:id="@+id/TVor"
-            android:layout_marginTop="51dp"
-            android:layout_below="@+id/TFemail"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/emailInput"
             android:layout_centerHorizontal="true" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Mobile Number"
-            android:id="@+id/TVmobile"
-            android:layout_marginTop="51dp"
-            android:layout_below="@+id/TVor"
-            android:layout_alignStart="@+id/TFemail" />
 
 
+<android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/mobInput"
+    android:layout_below="@+id/TVor">
 
         <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:ems="10"
+            android:hint="Mobile Number"
         android:id="@+id/TFmobile"
-        android:layout_below="@+id/TVmobile"
             android:maxLength="10"
-        android:layout_alignStart="@+id/TVmobile" />
+         />
+</android.support.design.widget.TextInputLayout>
 
 
     <Button
@@ -91,7 +86,8 @@
         android:textColor="@color/black"
         android:id="@+id/Bsubmit"
         android:onClick="onSubmit"
-        android:layout_below="@+id/TFmobile"
+        android:textSize="15sp"
+        android:layout_below="@+id/mobInput"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="57dp" />
 

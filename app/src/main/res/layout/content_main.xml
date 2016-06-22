@@ -35,7 +35,6 @@
         android:text="MANAGER LOGIN"
         android:layout_marginTop="220dp"
         android:textColor="#000"
-
         android:background="#fff"
         />
 
@@ -44,7 +43,7 @@
         android:layout_height="47dp"
         android:id="@+id/driver"
         android:layout_marginLeft="10dp"
-        android:onClick="go"
+        android:onClick="go_d"
         android:text="Driver LOGIN"
         android:textColor="#000"
         android:layout_marginTop="310dp"

@@ -23,6 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Select your option:"
         android:textStyle="bold"
+        android:textSize="18sp"
         android:layout_marginTop="50dp"
         android:id="@+id/TVselect"
         android:layout_alignParentTop="true" />
@@ -35,7 +36,8 @@
         android:textColor="@color/black"
         android:background="@color/white"
         android:onClick="getL"
-        android:layout_marginTop="150dp"
+        android:textSize="15sp"
+        android:layout_marginTop="180dp"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -44,6 +46,7 @@
         android:text="Check Route"
         android:id="@+id/earlier_loc"
         android:onClick="getL"
+        android:textSize="15sp"
         android:textColor="@color/black"
         android:background="@color/white"
         android:layout_marginTop="250dp" />

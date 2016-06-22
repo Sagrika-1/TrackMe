@@ -109,20 +109,38 @@ public class Retrieve extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String response) {
 
-       // Toast.makeText(ctx,response, Toast.LENGTH_SHORT).show();
-      JSONObject jsonObject;
+     //   Toast.makeText(ctx,response, Toast.LENGTH_SHORT).show();
+     JSONObject jsonObject;
         JSONArray jsonArray;
-        // InfoAdapter infoAdapter = null;
-        //String json_string = response;
         try {
             jsonObject = new JSONObject(response);
+            String json =  jsonObject.getString("jsonstring");
+            switch (json){
+                case "p":
+                    Toast.makeText(ctx,"Enter correct Password",Toast.LENGTH_SHORT).show();
+                    break;
+                case "us":
+                    Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
+                    break;
+                case "go":
+                        Intent i = new Intent(ctx,Verify.class);
+                        ctx.startActivity(i);
+                    break;
+                default:
+                    break;
+            }
 
-           jsonArray = jsonObject.getJSONArray("jsonstring");
 
-            int count = 0;
+
+
+
+
+         //  jsonArray = jsonObject.getJSONArray("jsonstring");
+
+           /* int count = 0;
             while (count < jsonArray.length()) {
                 JSONObject JO = jsonArray.getJSONObject(count);
-                String jsonstring = jsonObject.getString("jsonstring");
+                String jsonstring = JO.getString("jsonstring");
            if(jsonstring =="p"){
                Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
            }
@@ -136,7 +154,10 @@ public class Retrieve extends AsyncTask<String, Void, String> {
                Intent intent = new Intent(ctx, Verify.class);
                intent.putExtra("id", username);
                ctx.startActivity(intent);
-           }
+           }*/
+
+
+
 
 
 
@@ -160,7 +181,7 @@ public class Retrieve extends AsyncTask<String, Void, String> {
                     intent.putExtra("id", username);
                     ctx.startActivity(intent);
                 }*/
-            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
