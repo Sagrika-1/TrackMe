@@ -47,6 +47,15 @@ public class managerLogin extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        MenuItem item1 = navigationView.getMenu().getItem(0);
+        item1.setVisible(false);
+
+        MenuItem item2 = navigationView.getMenu().getItem(1);
+        item2.setVisible(false);
+
+        MenuItem item3 = navigationView.getMenu().getItem(2);
+        item3.setVisible(false);
     }
 
     @Override
@@ -89,18 +98,7 @@ public class managerLogin extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.nav_settings)
-        {
-            Intent i = new Intent(this,ChangeInfo.class);
-            startActivity(i);
-
-        }
-        else if (id == R.id.nav_logout)
-        {
-            Intent i = new Intent(this,managerLogin.class);
-            startActivity(i);
-        }
-        else if (id == R.id.nav_help)
+        if (id == R.id.nav_help)
         {
             Intent i = new Intent(this,Help_page.class);
             startActivity(i);

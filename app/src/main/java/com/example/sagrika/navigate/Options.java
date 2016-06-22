@@ -60,7 +60,7 @@ public class Options extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent(this,Verify.class);
             startActivity(i);
             return true;
         }
@@ -74,7 +74,13 @@ public class Options extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.nav_settings)
+        if(id == R.id.nav_home)
+        {
+            Intent i = new Intent(this,Verify.class);
+            startActivity(i);
+
+        }
+        else if(id == R.id.nav_settings)
         {
             Intent i = new Intent(this,ChangeInfo.class);
             startActivity(i);
@@ -82,7 +88,7 @@ public class Options extends AppCompatActivity
         }
         else if (id == R.id.nav_logout)
         {
-            Intent i = new Intent(this,managerLogin.class);
+            Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }
         else if (id == R.id.nav_help)
