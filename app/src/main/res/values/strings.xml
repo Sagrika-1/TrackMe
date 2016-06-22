@@ -25,4 +25,5 @@
     <string name="title_activity_location_new">Map</string>
     <string name="title_activity_change_info">Change Info</string>
     <string name="title_activity_forgot">Forgot Password?</string>
+    <string name="title_activity_help">Help</string>
 </resources>

@@ -67,6 +67,10 @@
             android:name=".Forgot"
             android:label="@string/title_activity_forgot"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Help_page"
+            android:label="@string/title_activity_help"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

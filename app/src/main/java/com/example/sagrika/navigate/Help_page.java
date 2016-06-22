@@ -2,9 +2,6 @@ package com.example.sagrika.navigate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,21 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-public class Forgot extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    EditText TFemail,TFmobile;
-    int e,m;
-    String TFmail,TFphone;
+public class Help_page extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener
+{
+    private WebView wv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot);
+        setContentView(R.layout.activity_help);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -37,6 +34,11 @@ public class Forgot extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //The following code opens a url in the app
+        wv = (WebView) findViewById(R.id.WVhelp);
+        wv.setWebViewClient(new WebViewClient());
+        wv.loadUrl("http://www.gaiasmartcities.com");
     }
 
     @Override
@@ -65,6 +67,7 @@ public class Forgot extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
+
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             return true;
@@ -107,29 +110,6 @@ public class Forgot extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-public void onSubmit(View view){
-
-    TFemail = (EditText)findViewById(R.id.TFemail);
-    TFmobile = (EditText)findViewById(R.id.TFmobile);
-    TFmail = TFemail.getText().toString().trim();
-    TFphone = TFmobile.getText().toString().trim();
-    e= TFmail.length();
-    m= TFphone.length();
-    if(e==0 && m<10){
-        TFmobile.setError("Enter correct Phone number");
-    }
-    else if(m==10 && e==0){
 
     }
-    else if(m==0 && e!=0){
-
-    }
-    else if(m==0 && e==0) {
-        TFemail.setError("Enter Email ID");
-        TFmobile.setError("Enter correct Phone number");
-    }
-}
-
-
 }
