@@ -98,7 +98,7 @@ public class ManagerDriver extends AsyncTask<String,Void,String> {
 
         JSONObject jsonObject;
         JSONArray jsonArray;
-        String json_string = response_d;
+        //String json_string = response_d;
             try{
                 jsonObject = new JSONObject(response_d);
                 jsonArray = jsonObject.getJSONArray("jsonstring");

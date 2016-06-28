@@ -25,7 +25,7 @@ public class Verify extends AppCompatActivity
     EditText editText;
     String ID_l;
     String newText;
-    String manager_name;
+    String manager_name,manager_pass;
     Spinner spinner;
     ArrayAdapter<CharSequence> arrayAdapter;
     TextView id_vehicle;
@@ -46,10 +46,8 @@ public class Verify extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-
-    //    manager_name=getIntent().getStringExtra("id");
-
+      manager_name = getIntent().getStringExtra("username");
+        manager_pass =getIntent().getStringExtra("password");
 
 
         spinner = (Spinner)findViewById(R.id.spinner);
@@ -102,6 +100,8 @@ public class Verify extends AppCompatActivity
         else if(id == R.id.nav_settings)
         {
             Intent i = new Intent(this,ChangeInfo.class);
+            i.putExtra("pass",manager_pass);//added
+            i.putExtra("username",manager_name);//added
             startActivity(i);
 
         }
@@ -133,8 +133,8 @@ public class Verify extends AppCompatActivity
     public void options_go(View view) {
         String method = "manager_id";
         ID_l = spinner.getSelectedItem().toString();
-       // ManagerDriver managerDriver = new ManagerDriver(this);
-        //managerDriver.execute(method,ID_l);
+        //ManagerDriver managerDriver = new ManagerDriver(this);
+       //managerDriver.execute(method,manager_name,ID_l);
         Intent i = new Intent(this,Location_new.class);
         startActivity(i);
     }

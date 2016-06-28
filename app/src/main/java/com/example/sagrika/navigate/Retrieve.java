@@ -26,8 +26,8 @@ import java.net.URLEncoder;
  */
 public class Retrieve extends AsyncTask<String, Void, String> {
 
-    String result = "jsonstring";
-    String method, name, username = null, password;
+   // String result = "jsonstring";
+   String login_name, method,login_pass;
     int len;
     Context ctx;
 
@@ -56,8 +56,8 @@ public class Retrieve extends AsyncTask<String, Void, String> {
         String login_url = "http://sagrika.netau.net/login.php";
         method = params[0];
          if (method.equals("login")) {
-            String login_name = params[1];
-            String login_pass = params[2];
+            login_name = params[1];
+             login_pass = params[2];
 
             try {
                 URL url = new URL(login_url);
@@ -123,64 +123,16 @@ public class Retrieve extends AsyncTask<String, Void, String> {
                     Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
                     break;
                 case "go":
-                        Intent i = new Intent(ctx,Verify.class);
+                        Intent i = new Intent(ctx, Verify.class);
+                       i.putExtra("username",login_name);
+                        i.putExtra("password",login_pass);//added
                         ctx.startActivity(i);
+
+                   // }
                     break;
                 default:
                     break;
             }
-
-
-
-
-
-
-         //  jsonArray = jsonObject.getJSONArray("jsonstring");
-
-           /* int count = 0;
-            while (count < jsonArray.length()) {
-                JSONObject JO = jsonArray.getJSONObject(count);
-                String jsonstring = JO.getString("jsonstring");
-           if(jsonstring =="p"){
-               Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
-           }
-            else if(jsonstring =="us"){
-               Toast.makeText(ctx, "Incorrect Password", Toast.LENGTH_SHORT).show();
-           }
-            else{
-              // name = jsonObject.getString("name");
-              // username = jsonObject.getString("username");
-               //Toast.makeText(ctx, "Welcome " + username, Toast.LENGTH_SHORT).show();
-               Intent intent = new Intent(ctx, Verify.class);
-               intent.putExtra("id", username);
-               ctx.startActivity(intent);
-           }*/
-
-
-
-
-
-
-
-
-                //  name = JO.getString("name");
-              /*  username = JO.getString("username");
-                len = username.length();
-                if (len == 0) {
-                    Toast.makeText(ctx, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
-                }
-
-                //    Info info = new Info(name,username);
-                // infoAdapter.add(info);
-
-                else {
-                    count++;
-                    Toast.makeText(ctx, "Welcome " + username, Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(ctx, Verify.class);
-                    intent.putExtra("id", username);
-                    ctx.startActivity(intent);
-                }*/
 
         } catch (JSONException e) {
             e.printStackTrace();
