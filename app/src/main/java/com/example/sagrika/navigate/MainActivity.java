@@ -1,6 +1,7 @@
 package com.example.sagrika.navigate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences(MyPREFERENCES,MODE_PRIVATE);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,5 +94,30 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intentDriver);
                 //break;
         }
+
+   /* @Override
+    protected void onResume() {
+        startActivity(new Intent(this,Verify.class));
+        super.onResume();
+    }*/
+
+  /*  @Override
+    protected void onPause() {
+        startActivity(new Intent(this,Verify.class));
+        super.onPause();
+    }*/
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("lastActivity",getClass().getName());
+        editor.commit();
+
+        // startActivity(new Intent(this,Verify.class));
+
+    }
+
     }
 

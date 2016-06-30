@@ -126,6 +126,7 @@ public class Retrieve extends AsyncTask<String, Void, String> {
                         Intent i = new Intent(ctx, Verify.class);
                        i.putExtra("username",login_name);
                         i.putExtra("password",login_pass);//added
+
                         ctx.startActivity(i);
 
                    // }

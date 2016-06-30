@@ -1,6 +1,7 @@
 package com.example.sagrika.navigate;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,10 +26,11 @@ public class Verify extends AppCompatActivity
     EditText editText;
     String ID_l;
     String newText;
-    String manager_name,manager_pass;
+    String manager_name,manager_pass,new_name;
     Spinner spinner;
     ArrayAdapter<CharSequence> arrayAdapter;
     TextView id_vehicle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,15 @@ public class Verify extends AppCompatActivity
 
       manager_name = getIntent().getStringExtra("username");
         manager_pass =getIntent().getStringExtra("password");
+
+        final DataBaseHelper info = new DataBaseHelper(Verify.this);
+        info.putData(manager_name,manager_pass);
+        Cursor cursor = info.getData();
+        if(cursor.moveToFirst()){
+            do{
+                new_name = cursor.getString(0);
+            }while(cursor.moveToNext());
+        }
 
 
         spinner = (Spinner)findViewById(R.id.spinner);
@@ -107,6 +118,8 @@ public class Verify extends AppCompatActivity
         }
         else if (id == R.id.nav_logout)
         {
+            final DataBaseHelper info = new DataBaseHelper(this);
+            info.delData();
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }
@@ -138,4 +151,6 @@ public class Verify extends AppCompatActivity
         Intent i = new Intent(this,Location_new.class);
         startActivity(i);
     }
+
+
 }
