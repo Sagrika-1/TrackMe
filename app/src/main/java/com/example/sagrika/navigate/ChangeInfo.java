@@ -2,6 +2,7 @@ package com.example.sagrika.navigate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -85,11 +86,19 @@ public class ChangeInfo extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_home) {
+        if (id == R.id.action_home)
+        {
+            final DataBaseHelper info = new DataBaseHelper(this);
+            Cursor cursor = info.getData();
+            String name,pass;
+            if(cursor.moveToFirst())
+            {
+                name = cursor.getString(0);
+                pass = cursor.getString(1);
+                SpinnerJSON spinner = new SpinnerJSON(this);
+                spinner.execute(name, pass);
+            }return true;
 
-            Intent i = new Intent(this,Verify.class);
-            startActivity(i);
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -101,20 +110,31 @@ public class ChangeInfo extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        final DataBaseHelper info = new DataBaseHelper(this);
+        Cursor cursor = info.getData();
+        String name = null,pass = null;
+        if(cursor.moveToFirst())
+        {
+            name = cursor.getString(0);
+            pass = cursor.getString(1);
+        }
+
         if(id == R.id.nav_home)
         {
-            Intent i = new Intent(this,Verify.class);
-            startActivity(i);
+            SpinnerJSON spinner = new SpinnerJSON(this);
+            spinner.execute(name,pass);
 
         }
         else if(id == R.id.nav_settings)
         {
             Intent i = new Intent(this,ChangeInfo.class);
+            i.putExtra("pass",pass);//added
+            i.putExtra("username",name);//added
             startActivity(i);
-
         }
         else if (id == R.id.nav_logout)
         {
+            info.delData();
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }

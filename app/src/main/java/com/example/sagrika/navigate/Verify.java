@@ -146,9 +146,7 @@ public class Verify extends AppCompatActivity
     public void options_go(View view) {
         String method = "manager_id";
         ID_l = spinner.getSelectedItem().toString();
-        //ManagerDriver managerDriver = new ManagerDriver(this);
-       //managerDriver.execute(method,manager_name,ID_l);
-        Intent i = new Intent(this,Location_new.class);
+               Intent i = new Intent(this,Location_new.class);
         startActivity(i);
     }
 

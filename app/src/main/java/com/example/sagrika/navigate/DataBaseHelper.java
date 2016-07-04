@@ -52,7 +52,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getData(){
         db =this.getReadableDatabase();
         Cursor cursor;
-        String[] projections = {USERNAME};
+        String[] projections = {USERNAME,PASSWORD};
         cursor = db.query(TB_NAME,projections,null,null,null,null,null);
         return cursor;
     }

@@ -19,6 +19,7 @@
 
     <string name="action_home">Home</string>
     <string name="title_activity_manager_login">Manager Login</string>
+    <string name="title_activity_track_page">Track</string>
     <string name="title_activity_driver_login">Driver Login</string>
     <string name="title_activity_verify">Verify</string>
     <string name="title_activity_options">Options</string>

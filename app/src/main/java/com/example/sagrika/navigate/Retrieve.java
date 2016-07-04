@@ -123,11 +123,10 @@ public class Retrieve extends AsyncTask<String, Void, String> {
                     Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
                     break;
                 case "go":
-                        Intent i = new Intent(ctx, Verify.class);
-                       i.putExtra("username",login_name);
-                        i.putExtra("password",login_pass);//added
 
-                        ctx.startActivity(i);
+
+                    SpinnerJSON spinnerJSON = new SpinnerJSON(ctx);
+                    spinnerJSON.execute(login_name,login_pass);
 
                    // }
                     break;

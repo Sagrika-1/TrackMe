@@ -1,6 +1,7 @@
 package com.example.sagrika.navigate;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -24,7 +26,6 @@ public class Help_page extends AppCompatActivity
         setContentView(R.layout.activity_help);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -66,11 +67,18 @@ public class Help_page extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_home) {
-
-            Intent i = new Intent(this,Verify.class);
-            startActivity(i);
-            return true;
+        if (id == R.id.action_home)
+        {
+            final DataBaseHelper info = new DataBaseHelper(this);
+            Cursor cursor = info.getData();
+            String name,pass;
+            if(cursor.moveToFirst())
+            {
+                name = cursor.getString(0);
+                pass = cursor.getString(1);
+                SpinnerJSON spinner = new SpinnerJSON(this);
+                spinner.execute(name, pass);
+            }return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -82,20 +90,31 @@ public class Help_page extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        final DataBaseHelper info = new DataBaseHelper(this);
+        Cursor cursor = info.getData();
+        String name = null,pass = null;
+        if(cursor.moveToFirst())
+        {
+            name = cursor.getString(0);
+            pass = cursor.getString(1);
+        }
+
         if(id == R.id.nav_home)
         {
-            Intent i = new Intent(this,Verify.class);
-            startActivity(i);
+            SpinnerJSON spinner = new SpinnerJSON(this);
+            spinner.execute(name,pass);
 
         }
         else if(id == R.id.nav_settings)
         {
             Intent i = new Intent(this,ChangeInfo.class);
+            i.putExtra("pass",pass);//added
+            i.putExtra("username",name);//added
             startActivity(i);
-
         }
         else if (id == R.id.nav_logout)
         {
+            info.delData();
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }

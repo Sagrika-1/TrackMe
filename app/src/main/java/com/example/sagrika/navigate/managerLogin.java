@@ -115,7 +115,8 @@ public class managerLogin extends AppCompatActivity
         else if(b==0){
             userPassword.setError("Password Required");
         }
-        else {
+        else
+        {
 
             Retrieve retrieve = new Retrieve(this);
             retrieve.execute(method, login_name, login_pass);
