@@ -36,7 +36,7 @@ public class SpinnerJSON extends AsyncTask<String, Void, String>
 
     @Override
     protected String doInBackground(String... params) {
-        String get_url = "http://sagrika.netau.net/get_id.php";
+        String get_url = "http://192.168.0.105:80/TrackMe/get_id.php";
         username = params[0];
         password = params[1];
 

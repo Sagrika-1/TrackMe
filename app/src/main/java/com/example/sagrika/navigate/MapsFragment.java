@@ -42,7 +42,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback
     {
         marker = new LatLng(lat, lng);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 13));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 8));
 
         googleMap.addMarker(new MarkerOptions().title("Hello Google Maps!").position(marker));
     }

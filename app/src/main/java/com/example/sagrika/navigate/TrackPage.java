@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -119,6 +120,37 @@ public class TrackPage extends AppCompatActivity
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.action_home)
+        {
+            final DataBaseHelper info = new DataBaseHelper(this);
+            Cursor cursor = info.getData();
+            String name,pass;
+            if(cursor.moveToFirst())
+            {
+                name = cursor.getString(0);
+                pass = cursor.getString(1);
+                SpinnerJSON spinner = new SpinnerJSON(this);
+                spinner.execute(name, pass);
+            }return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -134,7 +166,13 @@ public class TrackPage extends AppCompatActivity
             pass = cursor.getString(1);
         }
 
-        if(id == R.id.nav_settings)
+        if(id == R.id.nav_home)
+        {
+            SpinnerJSON spinner = new SpinnerJSON(this);
+            spinner.execute(name,pass);
+
+        }
+        else if(id == R.id.nav_settings)
         {
             Intent i = new Intent(this,ChangeInfo.class);
             i.putExtra("pass",pass);//added
@@ -170,7 +208,7 @@ public class TrackPage extends AppCompatActivity
     {
         @Override
         protected String doInBackground(String... params) {
-            String get_url = "http://sagrika.netau.net/get_all.php";
+            String get_url = "http://192.168.0.105:80/TrackMe/get_all.php";
             String username = params[0];
 
             try {
@@ -258,7 +296,7 @@ public class TrackPage extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... params) {
-            String get_url = "http://sagrika.netau.net/Latlng.php";
+            String get_url = "http://192.168.0.105:80/TrackMe/Latlng.php";
             String ID = params[0];
 
             try {

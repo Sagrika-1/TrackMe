@@ -26,9 +26,7 @@ import java.net.URLEncoder;
  */
 public class Retrieve extends AsyncTask<String, Void, String> {
 
-   // String result = "jsonstring";
    String login_name, method,login_pass;
-    int len;
     Context ctx;
 
     Retrieve(Context ctx) {
@@ -37,7 +35,6 @@ public class Retrieve extends AsyncTask<String, Void, String> {
 
     }
 
-    String JSON_STRING;
     String json_url;
 
 
@@ -51,9 +48,9 @@ public class Retrieve extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        json_url = "http://sagrika.netau.net/json_get.php";
-        String reg_url = "http://sagrika.netau.net/logindata.php";
-        String login_url = "http://sagrika.netau.net/login.php";
+        json_url = "http://192.168.0.105:80/TrackMe/json_get.php";
+        String reg_url = "http://192.168.0.105:80/TrackMe/logindata.php";
+        String login_url = "http://192.168.0.105:80/TrackMe/login.php";
         method = params[0];
          if (method.equals("login")) {
             login_name = params[1];
