@@ -27,4 +27,6 @@
     <string name="title_activity_change_info">Change Info</string>
     <string name="title_activity_forgot">Forgot Password?</string>
     <string name="title_activity_help">Help</string>
+    <string name="title_activity_driver_map">Map</string>
+    <string name="empty_string" />
 </resources>

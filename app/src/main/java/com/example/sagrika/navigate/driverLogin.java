@@ -1,7 +1,10 @@
 package com.example.sagrika.navigate;
 
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,10 +17,28 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+
 public class driverLogin extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     EditText editText1;
-    String stg;
+    String stg,latitude,longitude;
+    int len = 0;
+    Double lat,lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +92,7 @@ public class driverLogin extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             return true;
         }
@@ -87,15 +108,11 @@ public class driverLogin extends AppCompatActivity
 
         if (id == R.id.nav_help)
         {
-            Intent i = new Intent(this,Help_page.class);
+            Intent i = new Intent(this, Help_main.class);
             startActivity(i);
-        }
-        else if (id == R.id.nav_about)
-        {
+        } else if (id == R.id.nav_about) {
 
-        }
-        else if (id == R.id.nav_policy)
-        {
+        } else if (id == R.id.nav_policy) {
 
         }
 
@@ -104,18 +121,98 @@ public class driverLogin extends AppCompatActivity
         return true;
     }
 
-    public void optionsDriver(View view) {
-
+    public void optionsDriver(View view)
+    {
         editText1 = (EditText) findViewById(R.id.vehicled);
         stg = editText1.getText().toString();
-       if (stg.equals("123456")) {
-            Intent intentDr = new Intent(this, Location_new.class);
-            startActivity(intentDr);
-        } else {
-            Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
+        len = stg.length();
+        if (len == 0)
+        {
+            Toast.makeText(getApplicationContext(), "Enter Vehicle Id", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            new driver().execute(stg);
+        }
+
+    }
 
 
-      }
+    public class driver extends AsyncTask<String, Void, String> {
 
+        @Override
+        protected String doInBackground(String... params) {
+            String driver_url = "http://192.168.0.109:80/TrackMe/driverlogin.php";
+            String driverId = params[0];
+
+
+            try
+            {
+                URL url = new URL(driver_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String data = URLEncoder.encode("driverId", "UTF-8") + "=" + URLEncoder.encode(driverId, "UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String response = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    response += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return response;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try
+            {
+                JSONObject obj = new JSONObject(s);
+                JSONArray arr = obj.getJSONArray("jsonstring");
+                Log.e("string",s);
+
+                if(obj.getJSONArray("jsonstring").equals("no"))
+                {
+                    Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    JSONObject object = new JSONObject(arr.getString(0));
+
+                    latitude = object.getString("Lat");
+                    longitude = object.getString("Lng");
+                    lat = Double.parseDouble(latitude);
+                    lng = Double.parseDouble(longitude);
+                    Log.e("printing",latitude);
+
+                    Intent i = new Intent(driverLogin.this,Driver_map.class);
+                    i.putExtra("lat",lat);
+                    i.putExtra("lng",lng);
+                    startActivity(i);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            super.onPostExecute(s);
+        }
     }
 }

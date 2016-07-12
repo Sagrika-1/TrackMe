@@ -3,6 +3,7 @@ package com.example.sagrika.navigate;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -48,13 +49,16 @@ public class Retrieve extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        json_url = "http://192.168.0.105:80/TrackMe/json_get.php";
-        String reg_url = "http://192.168.0.105:80/TrackMe/logindata.php";
-        String login_url = "http://192.168.0.105:80/TrackMe/login.php";
+        json_url = "http://192.168.0.109:80/TrackMe/json_get.php";
+        String reg_url = "http://192.168.0.109:80/TrackMe/logindata.php";
+        String login_url = "http://192.168.0.109:80/TrackMe/login.php";
         method = params[0];
-         if (method.equals("login")) {
+         if (method.equals("login"))
+         {
             login_name = params[1];
              login_pass = params[2];
+             Log.e("name",login_name);
+             Log.e("pass",login_pass);
 
             try {
                 URL url = new URL(login_url);
@@ -104,11 +108,11 @@ public class Retrieve extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String response) {
+    protected void onPostExecute(String response)
+    {
 
      //   Toast.makeText(ctx,response, Toast.LENGTH_SHORT).show();
-     JSONObject jsonObject;
-        JSONArray jsonArray;
+        JSONObject jsonObject;
         try {
             jsonObject = new JSONObject(response);
             String json =  jsonObject.getString("jsonstring");

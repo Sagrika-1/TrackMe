@@ -42,7 +42,7 @@ public class SplashScreen extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    finish();
+
 
                     final DataBaseHelper info = new DataBaseHelper(SplashScreen.this);
                     cursor = info.getData();
@@ -54,8 +54,9 @@ public class SplashScreen extends AppCompatActivity {
 
                         SpinnerJSON spinner = new SpinnerJSON(SplashScreen.this);
                         spinner.execute(name,pass);
-
                     }
+                    finish();
+
 
                 }
             }

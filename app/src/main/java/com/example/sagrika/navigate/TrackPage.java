@@ -82,7 +82,7 @@ public class TrackPage extends AppCompatActivity
         MenuItem item = navigationView.getMenu().getItem(0);
         item.setVisible(false);
 
-        new MapJSON().execute("nisha");
+        new MapJSON().execute(manager_name);
 
         Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
         // Locate the spinner in activity_main.xml
@@ -208,7 +208,7 @@ public class TrackPage extends AppCompatActivity
     {
         @Override
         protected String doInBackground(String... params) {
-            String get_url = "http://192.168.0.105:80/TrackMe/get_all.php";
+            String get_url = "http://192.168.0.109:80/TrackMe/get_all.php";
             String username = params[0];
 
             try {
@@ -296,7 +296,7 @@ public class TrackPage extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... params) {
-            String get_url = "http://192.168.0.105:80/TrackMe/Latlng.php";
+            String get_url = "http://192.168.0.109:80/TrackMe/Latlng.php";
             String ID = params[0];
 
             try {

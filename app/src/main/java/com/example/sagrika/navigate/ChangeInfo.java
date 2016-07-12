@@ -179,7 +179,7 @@ public class ChangeInfo extends AppCompatActivity
                 confPass = params[1];
                 currpass = params[2];
 
-                String update_url = "http://sagrika.netau.net/update_pass.php";
+                String update_url = "http://192.168.0.109:80/TrackMe/update_pass.php";
 
                 try {//added
                     URL url = new URL(update_url);

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -76,7 +77,7 @@ public class managerLogin extends AppCompatActivity
 
         if (id == R.id.nav_help)
         {
-            Intent i = new Intent(this,Help_page.class);
+            Intent i = new Intent(this,Help_main.class);
             startActivity(i);
         }
         else if (id == R.id.nav_about)
@@ -94,7 +95,8 @@ public class managerLogin extends AppCompatActivity
     }
 
 
-    public void verification(View view) {
+    public void verification(View view)
+    {
 
         EditText userName = (EditText) findViewById(R.id.userName);
         EditText userPassword = (EditText) findViewById(R.id.userPassword);
@@ -117,7 +119,8 @@ public class managerLogin extends AppCompatActivity
         }
         else
         {
-
+            Log.e("name",login_name);
+            Log.e("pass",login_pass);
             Retrieve retrieve = new Retrieve(this);
             retrieve.execute(method, login_name, login_pass);
 
