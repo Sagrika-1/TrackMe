@@ -57,8 +57,6 @@ public class Retrieve extends AsyncTask<String, Void, String> {
          {
             login_name = params[1];
              login_pass = params[2];
-             Log.e("name",login_name);
-             Log.e("pass",login_pass);
 
             try {
                 URL url = new URL(login_url);

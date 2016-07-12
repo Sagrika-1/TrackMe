@@ -273,7 +273,7 @@ public class TrackPage extends AppCompatActivity
             obj.setArguments(bundle);
 
             FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, obj).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, obj).commitAllowingStateLoss();
         }
     }
 

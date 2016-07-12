@@ -126,6 +126,7 @@ public class driverLogin extends AppCompatActivity
         editText1 = (EditText) findViewById(R.id.vehicled);
         stg = editText1.getText().toString();
         len = stg.length();
+        Log.e("msg",stg);
         if (len == 0)
         {
             Toast.makeText(getApplicationContext(), "Enter Vehicle Id", Toast.LENGTH_SHORT).show();
@@ -142,7 +143,7 @@ public class driverLogin extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... params) {
-            String driver_url = "http://192.168.0.109:80/TrackMe/driverlogin.php";
+            String driver_url = "http://192.168.0.109:80/TrackMe/driverLogin.php";
             String driverId = params[0];
 
 
@@ -186,22 +187,21 @@ public class driverLogin extends AppCompatActivity
             try
             {
                 JSONObject obj = new JSONObject(s);
-                JSONArray arr = obj.getJSONArray("jsonstring");
+                JSONArray arr = obj.getJSONArray("driver");
+                String json = obj.getString("jsonstring");
                 Log.e("string",s);
 
-                if(obj.getJSONArray("jsonstring").equals("no"))
+                if(json.equals("no"))
                 {
                     Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
                     JSONObject object = new JSONObject(arr.getString(0));
-
                     latitude = object.getString("Lat");
                     longitude = object.getString("Lng");
                     lat = Double.parseDouble(latitude);
                     lng = Double.parseDouble(longitude);
-                    Log.e("printing",latitude);
 
                     Intent i = new Intent(driverLogin.this,Driver_map.class);
                     i.putExtra("lat",lat);
