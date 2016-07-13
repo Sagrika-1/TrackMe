@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,13 +25,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        //setRetainInstance(true);
         return inflater.inflate(R.layout.activity_maps, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
+        setRetainInstance(true);
         markersArray= new ArrayList<LatLng>();
         Bundle bundle = getArguments();
         markersArray = bundle.getParcelableArrayList("markersList");
@@ -45,7 +47,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback
         for (int i = 0; i < markersArray.size(); i++)
         {
             marker = markersArray.get(i);
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 13));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 1));
             googleMap.addMarker(new MarkerOptions().title("Hello Google Maps!").position(marker));
         }
     }

@@ -29,9 +29,8 @@ import java.net.URL;
 
 public class managerLogin extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    int counter=3;
-    String json_string;
     String login_name,login_pass;
+    EditText userName = null, userPassword= null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +48,6 @@ public class managerLogin extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        MenuItem item1 = navigationView.getMenu().getItem(0);
-        item1.setVisible(false);
-
         MenuItem item2 = navigationView.getMenu().getItem(1);
         item2.setVisible(false);
 
@@ -65,8 +61,34 @@ public class managerLogin extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            finish();
             super.onBackPressed();
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.action_home)
+        {
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -75,7 +97,13 @@ public class managerLogin extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_help)
+        if (id == R.id.nav_home)
+        {
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else if (id == R.id.nav_help)
         {
             Intent i = new Intent(this,Help_main.class);
             startActivity(i);
@@ -97,12 +125,8 @@ public class managerLogin extends AppCompatActivity
 
     public void verification(View view)
     {
-
-        EditText userName = (EditText) findViewById(R.id.userName);
-        EditText userPassword = (EditText) findViewById(R.id.userPassword);
-        Button login = (Button) findViewById(R.id.login);
-        // TextView attempts = (TextView) findViewById(R.id.attempts);
-        //TextView numAttempt = (TextView) findViewById(R.id.numAttempt);
+     userName = (EditText) findViewById(R.id.userName);
+        userPassword = (EditText) findViewById(R.id.userPassword);
         login_name = userName.getText().toString().trim();
         login_pass = userPassword.getText().toString().trim();
         int a=login_name.length(),b=login_pass.length();
@@ -135,6 +159,17 @@ public class managerLogin extends AppCompatActivity
         startActivity(i);
     }
 
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        // Clear all value here
+        if(userName!=null)
+            userName.setText("");
+        if(userPassword!=null)
+            userPassword.setText("");
+    }
 
     }
 

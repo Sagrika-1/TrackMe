@@ -56,9 +56,6 @@ public class driverLogin extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        MenuItem item1 = navigationView.getMenu().getItem(0);
-        item1.setVisible(false);
-
         MenuItem item2 = navigationView.getMenu().getItem(1);
         item2.setVisible(false);
 
@@ -94,6 +91,7 @@ public class driverLogin extends AppCompatActivity
         if (id == R.id.action_home) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+            finish();
             return true;
         }
 
@@ -106,13 +104,21 @@ public class driverLogin extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_help)
+        if (id == R.id.nav_home)
+        {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else if (id == R.id.nav_help)
         {
             Intent i = new Intent(this, Help_main.class);
             startActivity(i);
-        } else if (id == R.id.nav_about) {
+        }
+        else if (id == R.id.nav_about) {
 
-        } else if (id == R.id.nav_policy) {
+        }
+        else if (id == R.id.nav_policy) {
 
         }
 
@@ -129,7 +135,7 @@ public class driverLogin extends AppCompatActivity
         Log.e("msg",stg);
         if (len == 0)
         {
-            Toast.makeText(getApplicationContext(), "Enter Vehicle Id", Toast.LENGTH_SHORT).show();
+            editText1.setError("Enter Vehicle ID");
         }
         else
         {
@@ -187,26 +193,28 @@ public class driverLogin extends AppCompatActivity
             try
             {
                 JSONObject obj = new JSONObject(s);
-                JSONArray arr = obj.getJSONArray("driver");
                 String json = obj.getString("jsonstring");
                 Log.e("string",s);
 
-                if(json.equals("no"))
+                switch (json)
                 {
-                    Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    JSONObject object = new JSONObject(arr.getString(0));
-                    latitude = object.getString("Lat");
-                    longitude = object.getString("Lng");
-                    lat = Double.parseDouble(latitude);
-                    lng = Double.parseDouble(longitude);
+                    case "no":
+                        Log.e("string","Invalid ID");
+                        Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_LONG).show();
+                        break;
+                    case "yes":
+                        JSONArray arr = obj.getJSONArray("driver");
+                        JSONObject object = new JSONObject(arr.getString(0));
+                        latitude = object.getString("Lat");
+                        longitude = object.getString("Lng");
+                        lat = Double.parseDouble(latitude);
+                        lng = Double.parseDouble(longitude);
 
-                    Intent i = new Intent(driverLogin.this,Driver_map.class);
-                    i.putExtra("lat",lat);
-                    i.putExtra("lng",lng);
-                    startActivity(i);
+                        Intent i = new Intent(driverLogin.this,Driver_map.class);
+                        i.putExtra("lat",lat);
+                        i.putExtra("lng",lng);
+                        startActivity(i);
+                        break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -214,5 +222,14 @@ public class driverLogin extends AppCompatActivity
 
             super.onPostExecute(s);
         }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        // Clear all value here
+        if(editText1!=null)
+            editText1.setText("");
     }
 }

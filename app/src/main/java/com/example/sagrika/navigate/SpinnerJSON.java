@@ -91,7 +91,7 @@ public class SpinnerJSON extends AsyncTask<String, Void, String>
             e.printStackTrace();
         }
 
-        Intent i = new Intent(ctx, TrackPage.class);
+        Intent i = new Intent(ctx, TrackFleet.class);
         i.putStringArrayListExtra("vehicleList",vehicleList);
         i.putExtra("username",username);
         i.putExtra("password",password);

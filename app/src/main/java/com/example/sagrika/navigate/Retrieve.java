@@ -38,15 +38,6 @@ public class Retrieve extends AsyncTask<String, Void, String> {
 
     String json_url;
 
-
-    @Override
-    protected void onPreExecute() {
-        // alertDialog = new AlertDialog.Builder(ctx).create();
-        // alertDialog.setTitle("Login information");
-        // super.onPreExecute();
-
-    }
-
     @Override
     protected String doInBackground(String... params) {
         json_url = "http://192.168.0.109:80/TrackMe/json_get.php";
@@ -108,8 +99,6 @@ public class Retrieve extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String response)
     {
-
-     //   Toast.makeText(ctx,response, Toast.LENGTH_SHORT).show();
         JSONObject jsonObject;
         try {
             jsonObject = new JSONObject(response);
@@ -122,12 +111,8 @@ public class Retrieve extends AsyncTask<String, Void, String> {
                     Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
                     break;
                 case "go":
-
-
                     SpinnerJSON spinnerJSON = new SpinnerJSON(ctx);
                     spinnerJSON.execute(login_name,login_pass);
-
-                   // }
                     break;
                 default:
                     break;

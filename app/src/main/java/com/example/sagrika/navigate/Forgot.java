@@ -38,6 +38,12 @@ public class Forgot extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        MenuItem item1 = navigationView.getMenu().getItem(1);
+        item1.setVisible(false);
+
+        MenuItem item2 = navigationView.getMenu().getItem(2);
+        item2.setVisible(false);
     }
 
     @Override
@@ -66,16 +72,9 @@ public class Forgot extends AppCompatActivity
 
         if (id == R.id.action_home)
         {
-            final DataBaseHelper info = new DataBaseHelper(this);
-            Cursor cursor = info.getData();
-            String name,pass;
-            if(cursor.moveToFirst())
-            {
-                name = cursor.getString(0);
-                pass = cursor.getString(1);
-                SpinnerJSON spinner = new SpinnerJSON(this);
-                spinner.execute(name, pass);
-            }return true;
+            Intent i = new Intent(this,MainActivity.class);
+            startActivity(i);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -87,33 +86,11 @@ public class Forgot extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        final DataBaseHelper info = new DataBaseHelper(this);
-        Cursor cursor = info.getData();
-        String name = null,pass = null;
-        if(cursor.moveToFirst())
-        {
-            name = cursor.getString(0);
-            pass = cursor.getString(1);
-        }
-
         if(id == R.id.nav_home)
         {
-            SpinnerJSON spinner = new SpinnerJSON(this);
-            spinner.execute(name,pass);
-
-        }
-        else if(id == R.id.nav_settings)
-        {
-            Intent i = new Intent(this,ChangeInfo.class);
-            i.putExtra("pass",pass);//added
-            i.putExtra("username",name);//added
-            startActivity(i);
-        }
-        else if (id == R.id.nav_logout)
-        {
-            info.delData();
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }
         else if (id == R.id.nav_help)
         {

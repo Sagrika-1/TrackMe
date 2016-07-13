@@ -22,7 +22,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-       // setRetainInstance(true);
         return inflater.inflate(R.layout.activity_maps, container, false);
     }
 

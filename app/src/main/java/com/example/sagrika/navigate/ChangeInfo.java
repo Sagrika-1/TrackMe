@@ -131,12 +131,14 @@ public class ChangeInfo extends AppCompatActivity
             i.putExtra("pass",pass);//added
             i.putExtra("username",name);//added
             startActivity(i);
+            finish();
         }
         else if (id == R.id.nav_logout)
         {
             info.delData();
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }
         else if (id == R.id.nav_help)
         {
@@ -226,7 +228,7 @@ public class ChangeInfo extends AppCompatActivity
           @Override
           protected void onPostExecute(String response) {
 
-            Toast.makeText(ChangeInfo.this,response,Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(ChangeInfo.this,response,Toast.LENGTH_SHORT).show();
               len = currP.length();
           if (len == 0) {
                     Toast.makeText(getApplicationContext(), "Enter current password", Toast.LENGTH_SHORT).show();

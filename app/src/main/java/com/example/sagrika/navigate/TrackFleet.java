@@ -14,9 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,10 +41,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class TrackPage extends AppCompatActivity
+public class TrackFleet extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
-
+    AutoCompleteTextView autoCompleteTextView;
     ArrayList<LatLng> markersArray = new ArrayList<LatLng>();
     ArrayList<String> vehicleList;
     String passID;
@@ -58,7 +60,7 @@ public class TrackPage extends AppCompatActivity
         manager_pass =getIntent().getStringExtra("password");
         vehicleList = getIntent().getStringArrayListExtra("vehicleList");
 
-        final DataBaseHelper info = new DataBaseHelper(TrackPage.this);
+        final DataBaseHelper info = new DataBaseHelper(TrackFleet.this);
         info.putData(manager_name,manager_pass);
         Cursor cursor = info.getData();
         if(cursor.moveToFirst()) {
@@ -84,34 +86,37 @@ public class TrackPage extends AppCompatActivity
 
         new MapJSON().execute(manager_name);
 
-        Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
-        // Locate the spinner in activity_main.xml
-        ArrayAdapter<String> locationAdapter =
-                new ArrayAdapter<String>(TrackPage.this, android.R.layout.simple_spinner_item, vehicleList);
-        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locationAdapter.notifyDataSetChanged();
-        mySpinner.setAdapter(locationAdapter);
+        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.ACTV);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,vehicleList);
+        autoCompleteTextView.setThreshold(0);
+        autoCompleteTextView.setAdapter(adapter);
+
+        autoCompleteTextView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                autoCompleteTextView.showDropDown();
+                return false;
+            }
+        });
 
         // Spinner on item click listener
-        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent,
-                                       View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent,
+                                       View view, int position, long id)
+            {
                 if (position != 0)
                     passID = parent.getItemAtPosition(position).toString();
                 else
                     passID = "nothing";
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

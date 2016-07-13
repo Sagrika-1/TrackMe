@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 public class Help_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -77,6 +79,7 @@ public class Help_main extends AppCompatActivity
         {
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -92,6 +95,7 @@ public class Help_main extends AppCompatActivity
         {
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }
         else if (id == R.id.nav_help)
         {

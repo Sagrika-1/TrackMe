@@ -111,12 +111,14 @@ public class Help_page extends AppCompatActivity
             i.putExtra("pass",pass);//added
             i.putExtra("username",name);//added
             startActivity(i);
+            finish();
         }
         else if (id == R.id.nav_logout)
         {
             info.delData();
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
+            finish();
         }
         else if (id == R.id.nav_help)
         {
