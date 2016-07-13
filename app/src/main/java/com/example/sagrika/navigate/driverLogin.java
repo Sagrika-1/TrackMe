@@ -228,7 +228,7 @@ public class driverLogin extends AppCompatActivity
     protected void onPause(){
         super.onPause();
 
-        // Clear all value here
+        // Clear the editText value here
         if(editText1!=null)
             editText1.setText("");
     }
