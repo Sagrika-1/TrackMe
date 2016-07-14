@@ -34,7 +34,7 @@
             android:layout_height="47dp"
             android:imeOptions="actionDone"
             android:singleLine="true"
-            android:hint="Click or Enter ID"
+            android:hint="Select or Enter ID"
             android:layout_below="@+id/TVselect"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"/>

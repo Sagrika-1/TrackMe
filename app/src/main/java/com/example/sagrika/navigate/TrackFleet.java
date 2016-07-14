@@ -322,7 +322,15 @@ public class TrackFleet extends AppCompatActivity
 
     public void Bcheck(View view)
     {
-        Toast.makeText(getBaseContext(),"Check Route pressed",Toast.LENGTH_SHORT).show();
+        if(passID==null)
+        {
+            Toast.makeText(getBaseContext(),"Select a vehicle",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            new CheckJSON().execute(passID);
+            //Toast.makeText(getBaseContext(),"Check Route pressed",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class TrackJSON extends AsyncTask<String, Void, String> {
@@ -387,6 +395,75 @@ public class TrackFleet extends AppCompatActivity
             bundle.putDouble("lat",lat);
             bundle.putDouble("lng",lng);
             MapsFragment obj = new MapsFragment();
+            obj.setArguments(bundle);
+
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, obj).commit();
+        }
+    }
+
+    public class CheckJSON extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String get_url = "http://192.168.0.109:80/TrackMe/Latlng.php";
+            String ID = params[0];
+
+            try {
+                URL url = new URL(get_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String data = URLEncoder.encode("ID", "UTF-8") + "=" + URLEncoder.encode(ID, "UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String response = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    response += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return response;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String args) {
+            try {
+
+                JSONObject obj = new JSONObject(args);
+                JSONArray arr = obj.getJSONArray("jsonstring");
+                // Log.e("printed",arr.getString(0));
+                JSONObject object = new JSONObject(arr.getString(0));
+                String latitude = object.getString("Lat");
+                String longitude = object.getString("Lng");
+                Log.e("Lat",latitude);
+                lat = Double.parseDouble(latitude);
+                lng = Double.parseDouble(longitude);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Bundle bundle = new Bundle();
+            bundle.putDouble("lat",lat);
+            bundle.putDouble("lng",lng);
+            CheckRoute obj = new CheckRoute();
             obj.setArguments(bundle);
 
             FragmentManager fragmentManager = getFragmentManager();
