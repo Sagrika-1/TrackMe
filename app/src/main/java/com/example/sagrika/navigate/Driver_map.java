@@ -29,8 +29,10 @@ public class Driver_map extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //gets latitude and longitude from driverLogin
         lat = getIntent().getDoubleExtra("lat",0);
         lng = getIntent().getDoubleExtra("lng",0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_map);
 
@@ -39,6 +41,7 @@ public class Driver_map extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,6 +54,8 @@ public class Driver_map extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //The following sets the two items as invisible in navigation menu
+        //These items do not appear in navigation menu of this page
         MenuItem item2 = navigationView.getMenu().getItem(1);
         item2.setVisible(false);
 
@@ -59,7 +64,8 @@ public class Driver_map extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -69,7 +75,8 @@ public class Driver_map extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -82,7 +89,6 @@ public class Driver_map extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
@@ -111,10 +117,12 @@ public class Driver_map extends AppCompatActivity
             Intent i = new Intent(this, Help_main.class);
             startActivity(i);
         }
-        else if (id == R.id.nav_about) {
+        else if (id == R.id.nav_about)
+        {
 
         }
-        else if (id == R.id.nav_policy) {
+        else if (id == R.id.nav_policy)
+        {
 
         }
 
@@ -136,7 +144,7 @@ public class Driver_map extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        // Add a marker and move the camera
         LatLng marker = new LatLng(lat,lng);
         mMap.addMarker(new MarkerOptions().position(marker).title("Hello"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker,10));

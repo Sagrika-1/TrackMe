@@ -22,9 +22,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-/**
- * Created by Sagrika on 20/6/2016.
- */
+//AsyncTask to verify the credentials of the manager entered in Manager Login Page
+// and redirect to TrackPage if correct credentials are entered
 public class Retrieve extends AsyncTask<String, Void, String> {
 
    String login_name, method,login_pass;
@@ -39,9 +38,8 @@ public class Retrieve extends AsyncTask<String, Void, String> {
     String json_url;
 
     @Override
-    protected String doInBackground(String... params) {
-        json_url = "http://192.168.0.109:80/TrackMe/json_get.php";
-        String reg_url = "http://192.168.0.109:80/TrackMe/logindata.php";
+    protected String doInBackground(String... params)
+    {
         String login_url = "http://192.168.0.109:80/TrackMe/login.php";
         method = params[0];
          if (method.equals("login"))
@@ -89,13 +87,6 @@ public class Retrieve extends AsyncTask<String, Void, String> {
         return null;
     }
 
-
-    @Override
-    protected void onProgressUpdate(Void... values) {
-
-        super.onProgressUpdate(values);
-    }
-
     @Override
     protected void onPostExecute(String response)
     {
@@ -103,14 +94,15 @@ public class Retrieve extends AsyncTask<String, Void, String> {
         try {
             jsonObject = new JSONObject(response);
             String json =  jsonObject.getString("jsonstring");
-            switch (json){
-                case "p":
+            switch (json)
+            {
+                case "p":       //If the password entered is wrong this case is executed
                     Toast.makeText(ctx,"Enter correct Password",Toast.LENGTH_SHORT).show();
                     break;
-                case "us":
+                case "us":      //If username entered is wronf this case is executed
                     Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
                     break;
-                case "go":
+                case "go":      //If correct credentials are entered SpinnerJSON is executed to redirect to TrackPage
                     SpinnerJSON spinnerJSON = new SpinnerJSON(ctx);
                     spinnerJSON.execute(login_name,login_pass);
                     break;

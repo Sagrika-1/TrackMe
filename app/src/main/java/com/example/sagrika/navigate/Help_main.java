@@ -26,6 +26,8 @@ public class Help_main extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -38,6 +40,8 @@ public class Help_main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //The following sets the two items as invisible in navigation menu
+        //These items do not appear in navigation menu of this page
         MenuItem item1 = navigationView.getMenu().getItem(1);
         item1.setVisible(false);
 
@@ -51,7 +55,8 @@ public class Help_main extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -61,7 +66,8 @@ public class Help_main extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -74,7 +80,6 @@ public class Help_main extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_home)
         {
             Intent i = new Intent(this,MainActivity.class);
@@ -87,17 +92,18 @@ public class Help_main extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.nav_home)
+        if(id == R.id.nav_home)     //selecting home starts MainActivity
         {
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
         }
-        else if (id == R.id.nav_help)
+        else if (id == R.id.nav_help)       //selecting help starts Help_main
         {
             Intent i = new Intent(this,Help_main.class);
             startActivity(i);

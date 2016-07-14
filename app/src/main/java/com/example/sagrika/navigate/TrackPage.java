@@ -50,23 +50,29 @@ public class TrackPage extends AppCompatActivity
     String manager_name,manager_pass,new_name;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_page);
 
+        //The following are passed from the activity preceeding the TrackPage
         manager_name = getIntent().getStringExtra("username");
         manager_pass =getIntent().getStringExtra("password");
         vehicleList = getIntent().getStringArrayListExtra("vehicleList");
 
+        //This extracts the data from database in user device
         final DataBaseHelper info = new DataBaseHelper(TrackPage.this);
         info.putData(manager_name,manager_pass);
         Cursor cursor = info.getData();
-        if(cursor.moveToFirst()) {
-            do {
-                new_name = cursor.getString(0);
-            } while (cursor.moveToNext());
+        if(cursor.moveToFirst())            //checks if something exists in database in user device
+        {
+            do
+            {
+                new_name = cursor.getString(0);     //stores the username in 'new_name'
+            }while (cursor.moveToNext());
         }
 
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -80,12 +86,16 @@ public class TrackPage extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         MenuItem item = navigationView.getMenu().getItem(0);
-        item.setVisible(false);
+        item.setVisible(false);                   //sets the 'item' as invisible so that it doesn't appears in navigation menu
 
-        new MapJSON().execute(manager_name);
+        new MapJSON().execute(manager_name);       //starts the 'MapJSON' AsyncTask
 
+        /*The following code snippet is used to populate the spinner with arraylist 'vehicleList'
+        containing vehicle IDs of corresponding manager*/
+
+        // Locate the spinner in the xml file
         Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
-        // Locate the spinner in activity_main.xml
+
         ArrayAdapter<String> locationAdapter =
                 new ArrayAdapter<String>(TrackPage.this, android.R.layout.simple_spinner_item, vehicleList);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -151,10 +161,11 @@ public class TrackPage extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //Implements what happens on selecting items from navigation menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
         final DataBaseHelper info = new DataBaseHelper(this);
@@ -206,6 +217,8 @@ public class TrackPage extends AppCompatActivity
         return true;
     }
 
+
+    //Async task to get Latitudes and longitudes corresponding to vehicleList of manager logged in
     public class MapJSON extends AsyncTask<String, Void, String>
     {
         @Override
@@ -279,6 +292,7 @@ public class TrackPage extends AppCompatActivity
         }
     }
 
+    //Button to track the selected vehicle
     public void Btrack(View view)
     {
         if(passID.equals("nothing"))
@@ -286,14 +300,17 @@ public class TrackPage extends AppCompatActivity
             Toast.makeText(getBaseContext(),"Select a vehicle",Toast.LENGTH_SHORT).show();
         }
         else
-            new TrackJSON().execute(passID);
+            new TrackJSON().execute(passID);   //starts async task TrackJSON
     }
 
+    //Button to check route followed in the last two hours
     public void Bcheck(View view)
     {
         Toast.makeText(getBaseContext(),"Check Route pressed",Toast.LENGTH_SHORT).show();
     }
 
+
+    //Async task to display location of selected vehicle
     public class TrackJSON extends AsyncTask<String, Void, String> {
 
         @Override

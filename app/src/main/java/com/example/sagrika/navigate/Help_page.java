@@ -21,9 +21,12 @@ public class Help_page extends AppCompatActivity
     private WebView wv;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -43,7 +46,8 @@ public class Help_page extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -53,7 +57,8 @@ public class Help_page extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -66,13 +71,13 @@ public class Help_page extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_home)
         {
+            //checks if manager is logged in by checking database stored in device
             final DataBaseHelper info = new DataBaseHelper(this);
             Cursor cursor = info.getData();
             String name,pass;
-            if(cursor.moveToFirst())
+            if(cursor.moveToFirst())    //if database is not empty then following is executed
             {
                 name = cursor.getString(0);
                 pass = cursor.getString(1);

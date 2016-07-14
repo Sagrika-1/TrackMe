@@ -33,7 +33,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-
+        //Creates a thread different from main thread to display SplashScreen
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -43,15 +43,20 @@ public class SplashScreen extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
 
-
+                    //To check if manager was logged in
+                    //If manager was logged in then MainActivity is started else TrackPage is started
                     final DataBaseHelper info = new DataBaseHelper(SplashScreen.this);
                     cursor = info.getData();
-                    if (!cursor.moveToFirst()) {
+                    if (!cursor.moveToFirst())
+                    {
                         startActivity(new Intent(SplashScreen.this, MainActivity.class));
-                    } else {
+                    }
+                    else
+                    {
                         String name = cursor.getString(0);
                         String pass = cursor.getString(1);
 
+                        //Async Task to get the list of fleet IDs corresponding to logged in manager
                         SpinnerJSON spinner = new SpinnerJSON(SplashScreen.this);
                         spinner.execute(name,pass);
                     }

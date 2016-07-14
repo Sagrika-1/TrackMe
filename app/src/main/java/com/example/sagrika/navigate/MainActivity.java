@@ -16,13 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String MyPREFERENCES = "MyPrefs" ;
-
+        implements NavigationView.OnNavigationItemSelectedListener
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //The following sets the three items as invisible in navigation menu
+        //These items do not appear in navigation menu of this page
         MenuItem item1 = navigationView.getMenu().getItem(0);
         item1.setVisible(false);
 
@@ -80,29 +84,18 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-
-    public void go(View view) {
-
+    //The following are two buttons to select whether user is manager or driver
+    public void go(View view)
+    {
         Intent intentManager = new Intent(this, managerLogin.class);
         startActivity(intentManager);
-        //  break;
-    }
-    public void go_d(View view){
-                Intent intentDriver = new Intent(this,driverLogin.class);
-                startActivity(intentDriver);
-                //break;
-        }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("lastActivity",getClass().getName());
-        editor.commit();
-
     }
 
+    public void go_d(View view)
+    {
+        Intent intentDriver = new Intent(this,driverLogin.class);
+        startActivity(intentDriver);
+
     }
+}
 

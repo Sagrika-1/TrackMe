@@ -14,6 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+//This fragment displays the current location of selected vehicle
 public class MapsFragment extends Fragment implements OnMapReadyCallback
 {
     LatLng marker;
@@ -26,12 +27,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
+
+        //Gets the values passed from previous fragment
         Bundle bundle = getArguments();
         lat = bundle.getDouble("lat");
         lng = bundle.getDouble("lng");
 
+        //Starts a new map fragment
         MapFragment mapFragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
@@ -41,8 +46,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback
     {
         marker = new LatLng(lat, lng);
 
+        //Sets the marker on map and also the zoom value of camera
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 8));
 
+        //Sets the title for marker
         googleMap.addMarker(new MarkerOptions().title("Hello Google Maps!").position(marker));
     }
 }

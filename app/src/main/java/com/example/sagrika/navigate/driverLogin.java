@@ -34,16 +34,20 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class driverLogin extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener
+{
     EditText editText1;
     String stg,latitude,longitude;
     int len = 0;
     Double lat,lng;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_login);
+
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,6 +60,8 @@ public class driverLogin extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //The following sets the two items as invisible in navigation menu
+        //These items do not appear in navigation menu of this page
         MenuItem item2 = navigationView.getMenu().getItem(1);
         item2.setVisible(false);
 
@@ -64,7 +70,8 @@ public class driverLogin extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -74,7 +81,8 @@ public class driverLogin extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -87,7 +95,6 @@ public class driverLogin extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
@@ -104,21 +111,23 @@ public class driverLogin extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home)
+        if (id == R.id.nav_home)        //selecting home starts MainActivity
         {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
         }
-        else if (id == R.id.nav_help)
+        else if (id == R.id.nav_help)       //selecting help starts Help_main
         {
             Intent i = new Intent(this, Help_main.class);
             startActivity(i);
         }
-        else if (id == R.id.nav_about) {
+        else if (id == R.id.nav_about)
+        {
 
         }
-        else if (id == R.id.nav_policy) {
+        else if (id == R.id.nav_policy)
+        {
 
         }
 
@@ -127,12 +136,12 @@ public class driverLogin extends AppCompatActivity
         return true;
     }
 
+    //This method is invoked when user presses 'GET LOCATION' button on Driver Login Page
     public void optionsDriver(View view)
     {
         editText1 = (EditText) findViewById(R.id.vehicled);
         stg = editText1.getText().toString();
         len = stg.length();
-        Log.e("msg",stg);
         if (len == 0)
         {
             editText1.setError("Enter Vehicle ID");
@@ -145,8 +154,8 @@ public class driverLogin extends AppCompatActivity
     }
 
 
-    public class driver extends AsyncTask<String, Void, String> {
-
+    public class driver extends AsyncTask<String, Void, String>
+    {
         @Override
         protected String doInBackground(String... params) {
             String driver_url = "http://192.168.0.109:80/TrackMe/driverLogin.php";
@@ -189,7 +198,8 @@ public class driverLogin extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s)
+        {
             try
             {
                 JSONObject obj = new JSONObject(s);
@@ -198,11 +208,11 @@ public class driverLogin extends AppCompatActivity
 
                 switch (json)
                 {
-                    case "no":
+                    case "no":      //This is executed if ID entered does not exist in database
                         Log.e("string","Invalid ID");
                         Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_LONG).show();
                         break;
-                    case "yes":
+                    case "yes":     //This is executed if ID entered exists in database
                         JSONArray arr = obj.getJSONArray("driver");
                         JSONObject object = new JSONObject(arr.getString(0));
                         latitude = object.getString("Lat");
@@ -211,6 +221,7 @@ public class driverLogin extends AppCompatActivity
                         lng = Double.parseDouble(longitude);
 
                         Intent i = new Intent(driverLogin.this,Driver_map.class);
+                        //Passes the latitude and longitude value of vehicle ID entered to the Driver_map Activity
                         i.putExtra("lat",lat);
                         i.putExtra("lng",lng);
                         startActivity(i);
@@ -225,10 +236,11 @@ public class driverLogin extends AppCompatActivity
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause()
+    {
         super.onPause();
 
-        // Clear the editText value here
+        // Clears the editText value here if it is not null
         if(editText1!=null)
             editText1.setText("");
     }

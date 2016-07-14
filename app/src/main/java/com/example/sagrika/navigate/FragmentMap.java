@@ -18,9 +18,8 @@ import java.util.ArrayList;
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback
 {
-    ArrayList<LatLng> markersArray;
+    ArrayList<LatLng> markersArray;     //contains a list of markers
     LatLng marker;
-    Double lat, lng;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -34,9 +33,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
         markersArray= new ArrayList<LatLng>();
+
+        //Initialises 'markersArray' from ArrayList passed from the precceeding activity
         Bundle bundle = getArguments();
         markersArray = bundle.getParcelableArrayList("markersList");
 
+        //Starts a new map fragment
         MapFragment mapFragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
@@ -44,10 +46,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        //adds markers on map corresponding to the fleet of the logged in manager
         for (int i = 0; i < markersArray.size(); i++)
         {
             marker = markersArray.get(i);
+            //sets the marker and zoom value
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 1));
+            //sets the title of marker
             googleMap.addMarker(new MarkerOptions().title("Hello Google Maps!").position(marker));
         }
     }

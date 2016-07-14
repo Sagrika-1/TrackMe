@@ -28,16 +28,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class managerLogin extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener
+{
     String login_name,login_pass;
     EditText userName = null, userPassword= null;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_login);
+
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,10 +53,10 @@ public class managerLogin extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         MenuItem item2 = navigationView.getMenu().getItem(1);
-        item2.setVisible(false);
+        item2.setVisible(false);        //sets the 'item2' as invisible so that it doesn't appears in navigation menu
 
         MenuItem item3 = navigationView.getMenu().getItem(2);
-        item3.setVisible(false);
+        item3.setVisible(false);        //sets the 'item3' as invisible so that it doesn't appears in navigation menu
     }
 
     @Override
@@ -65,7 +69,6 @@ public class managerLogin extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,10 +94,11 @@ public class managerLogin extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //Implements what happens on selecting items from navigation menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
         if (id == R.id.nav_home)
@@ -125,46 +129,42 @@ public class managerLogin extends AppCompatActivity
 
     public void verification(View view)
     {
-     userName = (EditText) findViewById(R.id.userName);
+        userName = (EditText) findViewById(R.id.userName);
         userPassword = (EditText) findViewById(R.id.userPassword);
         login_name = userName.getText().toString().trim();
         login_pass = userPassword.getText().toString().trim();
         int a=login_name.length(),b=login_pass.length();
         String method = "login";
-        if (a==0 && b==0) {
+        if (a==0 && b==0)       //executed if both username and password fields are left blank
+        {
            userName.setError("Username Required");
             userPassword.setError("Password Required");
         }
-        else if(a==0){
+        else if(a==0)       //executed if username field is left blank
+        {
             userName.setError("Username Required");
         }
-        else if(b==0){
+        else if(b==0)       //executed if password field is left blank
+        {
             userPassword.setError("Password Required");
         }
-        else
+        else        //Starts the asyncTask 'Retrieve' for confirmation of manager credentials
         {
-            Log.e("name",login_name);
-            Log.e("pass",login_pass);
             Retrieve retrieve = new Retrieve(this);
             retrieve.execute(method, login_name, login_pass);
-
         }
-
-
-
-        }
+    }
 
     public void forgot(View view){
         Intent i = new Intent(this,Forgot.class);
         startActivity(i);
     }
 
-
     @Override
     protected void onPause(){
         super.onPause();
 
-        // Clear all value here
+        // Clear all values entered in Manager Login Page, if any
         if(userName!=null)
             userName.setText("");
         if(userPassword!=null)

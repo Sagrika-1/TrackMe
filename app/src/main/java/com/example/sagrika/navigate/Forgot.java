@@ -27,6 +27,8 @@ public class Forgot extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
+
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,6 +41,8 @@ public class Forgot extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //The following sets the two items as invisible in navigation menu
+        //These items do not appear in navigation menu of this page
         MenuItem item1 = navigationView.getMenu().getItem(1);
         item1.setVisible(false);
 
@@ -47,7 +51,8 @@ public class Forgot extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -57,20 +62,22 @@ public class Forgot extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_home)
+        if (id == R.id.action_home)     //tapping home icon from action bar starts MainActivity
         {
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
@@ -86,13 +93,13 @@ public class Forgot extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.nav_home)
+        if(id == R.id.nav_home)         //selecting home starts MainActivity
         {
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
             finish();
         }
-        else if (id == R.id.nav_help)
+        else if (id == R.id.nav_help)       //selecting help starts Help_page
         {
             Intent i = new Intent(this,Help_page.class);
             startActivity(i);
@@ -110,27 +117,31 @@ public class Forgot extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-public void onSubmit(View view){
 
-    TFemail = (EditText)findViewById(R.id.TFemail);
-    TFmobile = (EditText)findViewById(R.id.TFmobile);
-    TFmail = TFemail.getText().toString().trim();
-    TFphone = TFmobile.getText().toString().trim();
-    e= TFmail.length();
-    m= TFphone.length();
-    if(e==0 && m<10){
-        TFmobile.setError("Enter correct Phone number");
-    }
-    else if(m==10 && e==0){
-
-    }
-    else if(m==0 && e!=0){
-
-    }
-    else if(m==0 && e==0) {
-        TFemail.setError("Enter Email ID");
-        TFmobile.setError("Enter correct Phone number");
-    }
+    //The code snippet decides what happens on pressing 'SUBMIT' button on Forgot Password Page
+    public void onSubmit(View view)
+    {
+        TFemail = (EditText)findViewById(R.id.TFemail);
+        TFmobile = (EditText)findViewById(R.id.TFmobile);
+        TFmail = TFemail.getText().toString().trim();
+        TFphone = TFmobile.getText().toString().trim();
+        e= TFmail.length();         //Stores length of email ID in 'm'
+        m= TFphone.length();        //Stores length of phone number in 'm'
+        if(e==0 && m<10)
+        {
+            TFmobile.setError("Enter correct Phone number");
+        }
+        else if(m==10 && e==0)
+        {
+        }
+        else if(m==0 && e!=0)
+        {
+        }
+        else if(m==0 && e==0)
+        {
+            TFemail.setError("Enter Email ID");
+            TFmobile.setError("Enter correct Phone number");
+        }
 }
 
 

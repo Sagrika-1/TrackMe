@@ -41,9 +41,12 @@ public class ChangeInfo extends AppCompatActivity
     int len;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_info);
+
+        //The following code snippet is for initialising and displaying navigation menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,6 +60,8 @@ public class ChangeInfo extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        //Gets manager credentials from 'Retrive' java file to change password
         currpass = getIntent().getStringExtra("pass");
         curruser = getIntent().getStringExtra("username");
     }
@@ -88,6 +93,8 @@ public class ChangeInfo extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home)
         {
+
+            //Obtaining username and password fromSQLite database to confirm current password
             final DataBaseHelper info = new DataBaseHelper(this);
             Cursor cursor = info.getData();
             String name,pass;
@@ -110,6 +117,7 @@ public class ChangeInfo extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //Obtaining username and password fromSQLite database to confirm current password
         final DataBaseHelper info = new DataBaseHelper(this);
         Cursor cursor = info.getData();
         String name = null,pass = null;
@@ -121,6 +129,7 @@ public class ChangeInfo extends AppCompatActivity
 
         if(id == R.id.nav_home)
         {
+            //If manager is already logged in corresponding vehicleList will be populated
             SpinnerJSON spinner = new SpinnerJSON(this);
             spinner.execute(name,pass);
 
@@ -135,6 +144,7 @@ public class ChangeInfo extends AppCompatActivity
         }
         else if (id == R.id.nav_logout)
         {
+            //Data from SQLite database will be deleted
             info.delData();
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
@@ -169,9 +179,11 @@ public class ChangeInfo extends AppCompatActivity
         newPass = newP.getText().toString();
         confPass = confirmPass.getText().toString();
 
-        new Update_pass().execute(curruser, confPass, currpass);
+        new Update_pass().execute(curruser, confPass, currpass); //Async task Update_pass is called
 
     }
+
+    //AsyncTask for changing password in database
       public  class Update_pass extends AsyncTask<String, Void, String> {
 
             @Override
