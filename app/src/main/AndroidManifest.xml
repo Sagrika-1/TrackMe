@@ -30,11 +30,13 @@
         <activity
             android:name=".managerLogin"
             android:label="@string/title_activity_manager_login"
+            android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TrackFleet"
             android:label="@string/title_activity_track_page"
+            android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

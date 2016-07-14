@@ -81,8 +81,8 @@ public class SpinnerJSON extends AsyncTask<String, Void, String>
         try {
             JSONObject object = new JSONObject(args);
             JSONArray arr = object.getJSONArray("server_response");
-            vehicleList.add("Select a vehicle");
-            for (int i = 0; i < arr.length(); i++) {
+            for (int i = 0; i < arr.length(); i++)
+            {
                 String o = arr.getString(i);
                 // Populate spinner with IDs
                 vehicleList.add(o);

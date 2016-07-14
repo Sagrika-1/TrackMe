@@ -1,6 +1,7 @@
 package com.example.sagrika.navigate;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -11,11 +12,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -47,7 +51,7 @@ public class TrackFleet extends AppCompatActivity
     AutoCompleteTextView autoCompleteTextView;
     ArrayList<LatLng> markersArray = new ArrayList<LatLng>();
     ArrayList<String> vehicleList;
-    String passID;
+    String passID=null;
     Double lat,lng;
     String manager_name,manager_pass,new_name;
 
@@ -99,17 +103,39 @@ public class TrackFleet extends AppCompatActivity
             }
         });
 
-        // Spinner on item click listener
+        // AutoCompleteTextView on item click listener
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent,
                                        View view, int position, long id)
             {
-                if (position != 0)
-                    passID = parent.getItemAtPosition(position).toString();
-                else
-                    passID = "nothing";
+                passID = parent.getItemAtPosition(position).toString();
+
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+            }
+        });
+
+        autoCompleteTextView.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if(s.length()==0)
+                    passID = null;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+
             }
         });
     }
@@ -286,7 +312,7 @@ public class TrackFleet extends AppCompatActivity
 
     public void Btrack(View view)
     {
-        if(passID.equals("nothing"))
+        if(passID==null)
         {
             Toast.makeText(getBaseContext(),"Select a vehicle",Toast.LENGTH_SHORT).show();
         }

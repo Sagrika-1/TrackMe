@@ -8,7 +8,9 @@
     android:paddingTop="@dimen/activity_vertical_margin">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
 
         <FrameLayout
             android:id="@+id/content_frame"
@@ -27,10 +29,12 @@
             android:layout_marginTop="10dp"/>
 
         <AutoCompleteTextView
-            android:text=""
             android:id="@+id/ACTV"
             android:layout_width="200dp"
             android:layout_height="47dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:hint="Click or Enter ID"
             android:layout_below="@+id/TVselect"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"/>
