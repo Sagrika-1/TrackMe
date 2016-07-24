@@ -171,7 +171,8 @@ public class ChangeInfo extends AppCompatActivity
     }
 
 
-    public void return_home(View view) {
+    public void return_home(View view)
+    {
         currentP = (EditText) findViewById(R.id.currentP);
         newP = (EditText) findViewById(R.id.newP);
         confirmPass = (EditText) findViewById(R.id.confirmP);
@@ -193,7 +194,7 @@ public class ChangeInfo extends AppCompatActivity
                 confPass = params[1];
                 currpass = params[2];
 
-                String update_url = "http://192.168.0.109:80/TrackMe/update_pass.php";
+                String update_url = "http://192.168.1.9:80/TrackMe/update_pass.php";
 
                 try {//added
                     URL url = new URL(update_url);
@@ -238,30 +239,50 @@ public class ChangeInfo extends AppCompatActivity
             }
 
           @Override
-          protected void onPostExecute(String response) {
+          protected void onPostExecute(String response)
+          {
 
          //   Toast.makeText(ChangeInfo.this,response,Toast.LENGTH_SHORT).show();
-              len = currP.length();
-          if (len == 0) {
-                    Toast.makeText(getApplicationContext(), "Enter current password", Toast.LENGTH_SHORT).show();
-                } else if (currpass.equals(currP)) {
-              if (newPass.equals(confPass)) {
-                  Toast.makeText(getApplicationContext(), "Passwords changed successfully", Toast.LENGTH_SHORT).show();
-                  Intent i = new Intent(ChangeInfo.this, managerLogin.class);
-                  startActivity(i);
+          len = currP.length();
+          if (len == 0)
+          {
+              Toast.makeText(getApplicationContext(), "Enter current password", Toast.LENGTH_SHORT).show();
+          }
+          else if (currpass.equals(currP))
+          {
+              if (newPass.equals(confPass))
+              {
+                  Toast.makeText(getApplicationContext(), "Password changed successfully", Toast.LENGTH_SHORT).show();
+                  currentP.setText("");
+                  newP.setText("");
+                  confirmPass.setText("");
 
-              } else {
+                  final DataBaseHelper info = new DataBaseHelper(ChangeInfo.this);
+                  Cursor cursor = info.getData();
+                  String name = null,pass = null;
+                  if(cursor.moveToFirst())
+                  {
+                      name = cursor.getString(0);
+                      pass = cursor.getString(1);
+                  }
+                  //Data from SQLite database will be deleted
+                  info.delData();
+                  Intent i = new Intent(ChangeInfo.this,MainActivity.class);
+                  startActivity(i);
+                  TrackFleet.fa.finish();
+                  finish();
+              }
+              else
+              {
                   Toast.makeText(getApplicationContext(), "Passwords did not match", Toast.LENGTH_SHORT).show();
               }
-
-                } else {
+          }
+          else
+          {
               Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show(); //added
-
-                }
-              super.onPostExecute(response);            }
-
-
-        }
-
-    }
+          }
+          super.onPostExecute(response);
+          }
+      }
+}
 

@@ -31,7 +31,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        setRetainInstance(true);
         markersArray= new ArrayList<LatLng>();
 
         //Initialises 'markersArray' from ArrayList passed from the precceeding activity

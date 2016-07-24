@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -49,16 +50,20 @@ public class TrackFleet extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
     AutoCompleteTextView autoCompleteTextView;
-    ArrayList<LatLng> markersArray = new ArrayList<LatLng>();
+    ArrayList<LatLng> markersArray;
     ArrayList<String> vehicleList;
     String passID=null;
     Double lat,lng;
     String manager_name,manager_pass,new_name;
+    public static Activity fa;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_page);
+
+        fa=this;
 
         manager_name = getIntent().getStringExtra("username");
         manager_pass =getIntent().getStringExtra("password");
@@ -130,6 +135,8 @@ public class TrackFleet extends AppCompatActivity
             {
                 if(s.length()==0)
                     passID = null;
+                else
+                    passID = autoCompleteTextView.getText().toString();
             }
 
             @Override
@@ -241,7 +248,7 @@ public class TrackFleet extends AppCompatActivity
     {
         @Override
         protected String doInBackground(String... params) {
-            String get_url = "http://192.168.0.109:80/TrackMe/get_all.php";
+            String get_url = "http://192.168.1.9:80/TrackMe/get_all.php";
             String username = params[0];
 
             try {
@@ -283,6 +290,7 @@ public class TrackFleet extends AppCompatActivity
         {
             try
             {
+                markersArray = new ArrayList<LatLng>();
                 JSONObject obj = new JSONObject(args);
                 JSONArray arr = obj.getJSONArray("response");
                 for (int i = 0; i < arr.length(); i++)
@@ -333,11 +341,12 @@ public class TrackFleet extends AppCompatActivity
         }
     }
 
-    public class TrackJSON extends AsyncTask<String, Void, String> {
-
+    public class TrackJSON extends AsyncTask<String, Void, String>
+    {
         @Override
-        protected String doInBackground(String... params) {
-            String get_url = "http://192.168.0.109:80/TrackMe/Latlng.php";
+        protected String doInBackground(String... params)
+        {
+            String get_url = "http://192.168.1.9:80/TrackMe/Latlng.php";
             String ID = params[0];
 
             try {
@@ -375,30 +384,43 @@ public class TrackFleet extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(String args) {
-            try {
-
+        protected void onPostExecute(String args)
+        {
+            try
+            {
                 JSONObject obj = new JSONObject(args);
-                JSONArray arr = obj.getJSONArray("jsonstring");
-                // Log.e("printed",arr.getString(0));
-                JSONObject object = new JSONObject(arr.getString(0));
-                String latitude = object.getString("Lat");
-                String longitude = object.getString("Lng");
-                Log.e("Lat",latitude);
-                lat = Double.parseDouble(latitude);
-                lng = Double.parseDouble(longitude);
+                String json = obj.getString("jsonstring");
+                Log.e("string",args);
 
-            } catch (JSONException e) {
+                switch (json)
+                {
+                    case "no":      //This is executed if ID entered does not exist in database
+                        Log.e("string","Invalid ID");
+                        Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_LONG).show();
+                        break;
+                    case "yes":     //This is executed if ID entered exists in database
+                        JSONArray arr = obj.getJSONArray("response");
+                        // Log.e("printed",arr.getString(0));
+                        JSONObject object = new JSONObject(arr.getString(0));
+                        String latitude = object.getString("Lat");
+                        String longitude = object.getString("Lng");
+                        Log.e("Lat",latitude);
+                        lat = Double.parseDouble(latitude);
+                        lng = Double.parseDouble(longitude);
+                        Bundle bundle = new Bundle();
+                        bundle.putDouble("lat",lat);
+                        bundle.putDouble("lng",lng);
+                        MapsFragment mapsFragment = new MapsFragment();
+                        mapsFragment.setArguments(bundle);
+
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, mapsFragment).commit();
+                        break;
+                }
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
-            Bundle bundle = new Bundle();
-            bundle.putDouble("lat",lat);
-            bundle.putDouble("lng",lng);
-            MapsFragment obj = new MapsFragment();
-            obj.setArguments(bundle);
-
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, obj).commit();
         }
     }
 
@@ -406,7 +428,7 @@ public class TrackFleet extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... params) {
-            String get_url = "http://192.168.0.109:80/TrackMe/Latlng.php";
+            String get_url = "http://192.168.1.9:80/TrackMe/Check.php";
             String ID = params[0];
 
             try {
@@ -444,30 +466,50 @@ public class TrackFleet extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(String args) {
-            try {
-
+        protected void onPostExecute(String args)
+        {
+            try
+            {
                 JSONObject obj = new JSONObject(args);
-                JSONArray arr = obj.getJSONArray("jsonstring");
-                // Log.e("printed",arr.getString(0));
-                JSONObject object = new JSONObject(arr.getString(0));
-                String latitude = object.getString("Lat");
-                String longitude = object.getString("Lng");
-                Log.e("Lat",latitude);
-                lat = Double.parseDouble(latitude);
-                lng = Double.parseDouble(longitude);
+                String json = obj.getString("jsonstring");
+                Log.e("string",args);
 
-            } catch (JSONException e) {
+                switch (json)
+                {
+                    case "no":      //This is executed if ID entered does not exist in database
+                        Log.e("string","Invalid ID");
+                        Toast.makeText(getApplicationContext(), "Invalid ID", Toast.LENGTH_LONG).show();
+                        break;
+                    case "yes":     //This is executed if ID entered exists in database
+                        markersArray = new ArrayList<LatLng>();
+                        JSONArray arr = obj.getJSONArray("response");
+                        for (int i = 0; i < arr.length(); i++)
+                        {
+                            JSONObject object = new JSONObject(arr.getString(i));
+                            String latitude = object.getString("Lat");
+                            String longitude = object.getString("Lng");
+                            Log.e("Latcheck",latitude);
+                            Log.e("Lngcheck",longitude);
+                            lat = Double.parseDouble(latitude);
+                            lng = Double.parseDouble(longitude);
+                            markersArray.add(new LatLng(lat, lng));
+                        }
+
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("route",markersArray);
+                        check_route checkRoute = new check_route();
+                        checkRoute.setArguments(bundle);
+
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, checkRoute).commit();
+                        break;
+                }
+            }
+            catch (JSONException e)
+            {
                 e.printStackTrace();
             }
-            Bundle bundle = new Bundle();
-            bundle.putDouble("lat",lat);
-            bundle.putDouble("lng",lng);
-            CheckRoute obj = new CheckRoute();
-            obj.setArguments(bundle);
 
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, obj).commit();
         }
     }
 }

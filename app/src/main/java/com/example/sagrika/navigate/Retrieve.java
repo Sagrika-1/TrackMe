@@ -40,7 +40,7 @@ public class Retrieve extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params)
     {
-        String login_url = "http://192.168.0.109:80/TrackMe/login.php";
+        String login_url = "http://192.168.1.9:80/TrackMe/login.php";
         method = params[0];
          if (method.equals("login"))
          {
