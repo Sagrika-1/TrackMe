@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This fragment opens inside TrackFleet activity and displays the position of all the shipments owned by the manager
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

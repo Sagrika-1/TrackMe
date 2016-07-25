@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This fragment opens inside TrackFleet and displays the current position of the ID selected
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

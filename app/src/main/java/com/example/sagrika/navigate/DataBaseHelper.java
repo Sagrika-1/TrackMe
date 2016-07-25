@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This maintains an SQLite database in the app for maintaining Login and Logout Session
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-//SQLite database for maintaining Login and Logout Session
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "newdb";
@@ -38,7 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    //Manager name and password are obtained here from TrackPage for maintaining LoggedIn session
+    //Manager name and password are obtained here from Tracking Page for maintaining LoggedIn session
     public void  putData(String user,String pass){
         db= this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -48,7 +48,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.e("Data     ","Data inserted");
     }
 
-    //Called to get dats fromSQLite database if any manager is logged in
+    //Called to get data from SQLite database if any manager is logged in
     public Cursor getData(){
         db =this.getReadableDatabase();
         Cursor cursor;

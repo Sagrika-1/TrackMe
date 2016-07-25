@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This activity displays the location of ID, entered by driver
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;

@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This displays a Splash Screen when the app starts
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -44,7 +45,7 @@ public class SplashScreen extends AppCompatActivity {
                 } finally {
 
                     //To check if manager was logged in
-                    //If manager was logged in then MainActivity is started else TrackPage is started
+                    //If manager was logged in then MainActivity is started else TrackFleet is started
                     final DataBaseHelper info = new DataBaseHelper(SplashScreen.this);
                     cursor = info.getData();
                     if (!cursor.moveToFirst())

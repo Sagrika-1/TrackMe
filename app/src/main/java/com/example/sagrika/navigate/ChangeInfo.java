@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This Activity is for changing user password
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -194,9 +195,10 @@ public class ChangeInfo extends AppCompatActivity
                 confPass = params[1];
                 currpass = params[2];
 
-                String update_url = "http://192.168.1.9:80/TrackMe/update_pass.php";
+                String update_url = "http://192.168.0.108:80/TrackMe/update_pass.php";
 
-                try {//added
+                try
+                {
                     URL url = new URL(update_url);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                     httpURLConnection.setRequestMethod("POST");

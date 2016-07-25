@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This activity asks the manager to enter the username and password
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;

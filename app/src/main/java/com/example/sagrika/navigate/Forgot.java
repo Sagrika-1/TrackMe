@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This activity is for resetting password, in case the user forgets the password
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;

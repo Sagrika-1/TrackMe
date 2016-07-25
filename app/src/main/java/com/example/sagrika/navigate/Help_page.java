@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This page is displayed when user clicks on help after logging in as manager
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;

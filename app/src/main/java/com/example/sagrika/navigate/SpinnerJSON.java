@@ -22,7 +22,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-//Async Task to find the fleet IDs of the manager who has logged in
+//Async Task to find the fleet IDs owned by the manager who has logged in
 public class SpinnerJSON extends AsyncTask<String, Void, String>
 {
 
@@ -37,7 +37,7 @@ public class SpinnerJSON extends AsyncTask<String, Void, String>
 
     @Override
     protected String doInBackground(String... params) {
-        String get_url = "http://192.168.1.9:80/TrackMe/get_id.php";
+        String get_url = "http://192.168.0.108:80/TrackMe/get_id.php";
         username = params[0];
         password = params[1];
 
@@ -92,10 +92,10 @@ public class SpinnerJSON extends AsyncTask<String, Void, String>
             e.printStackTrace();
         }
 
-        //Starts the activity TrackPage
+        //Starts the activity TrackFleet
         Intent i = new Intent(ctx, TrackFleet.class);
 
-        //Passes data from the current activity to TrackPage
+        //Passes data from the current activity to TrackFleet
         i.putStringArrayListExtra("vehicleList",vehicleList);
         i.putExtra("username",username);
         i.putExtra("password",password);

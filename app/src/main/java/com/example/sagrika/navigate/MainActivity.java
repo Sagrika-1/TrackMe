@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This is the activity which prompts the user to select the login type, i.e., 'Manager' or 'Driver'
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;

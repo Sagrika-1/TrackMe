@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This activity prompts the driver to enter the ID for which the position has to be displayed
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -158,7 +159,7 @@ public class driverLogin extends AppCompatActivity
     {
         @Override
         protected String doInBackground(String... params) {
-            String driver_url = "http://192.168.1.9:80/TrackMe/driverLogin.php";
+            String driver_url = "http://192.168.0.108:80/TrackMe/driverLogin.php";
             String driverId = params[0];
 
 

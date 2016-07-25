@@ -3,6 +3,7 @@ package com.example.sagrika.navigate;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -52,7 +54,7 @@ public class TrackFleet extends AppCompatActivity
     AutoCompleteTextView autoCompleteTextView;
     ArrayList<LatLng> markersArray;
     ArrayList<String> vehicleList;
-    String passID=null;
+    String passID=null,selected=null;
     Double lat,lng;
     String manager_name,manager_pass,new_name;
     public static Activity fa;
@@ -244,11 +246,12 @@ public class TrackFleet extends AppCompatActivity
         return true;
     }
 
+    //AsyncTask to extract the locations of IDs owned by the logged in manager and pass to FragmentMap to display their locations
     public class MapJSON extends AsyncTask<String, Void, String>
     {
         @Override
         protected String doInBackground(String... params) {
-            String get_url = "http://192.168.1.9:80/TrackMe/get_all.php";
+            String get_url = "http://192.168.0.108:80/TrackMe/get_all.php";
             String username = params[0];
 
             try {
@@ -336,17 +339,34 @@ public class TrackFleet extends AppCompatActivity
         }
         else
         {
-            new CheckJSON().execute(passID);
-            //Toast.makeText(getBaseContext(),"Check Route pressed",Toast.LENGTH_SHORT).show();
+            selected=null;
+
+            //The following code snippet is for displaying an alert box to select the
+            //number of hours to display the route information
+            CharSequence colors[] = new CharSequence[] {"1","2","3","4","5","6","7","8","9","10"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Select the tracking hours");
+            builder.setItems(colors, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int option)
+                {
+                    selected = Integer.toString(option);
+                    Log.e("option",selected);
+                    new CheckJSON().execute(passID,selected);   //AsyncTask CheckJSON is started after an option is selected
+                }
+            });
+            builder.show();
         }
     }
 
+    //AsyncTask to extract the location of ID selected by manager and pass to MapsFragment to display its location
     public class TrackJSON extends AsyncTask<String, Void, String>
     {
         @Override
         protected String doInBackground(String... params)
         {
-            String get_url = "http://192.168.1.9:80/TrackMe/Latlng.php";
+            String get_url = "http://192.168.0.108:80/TrackMe/Latlng.php";
             String ID = params[0];
 
             try {
@@ -424,12 +444,18 @@ public class TrackFleet extends AppCompatActivity
         }
     }
 
-    public class CheckJSON extends AsyncTask<String, Void, String> {
+    //AsyncTask to display the route of ID selected by manager and pass to check_route to display its route
+    public class CheckJSON extends AsyncTask<String, Void, CheckJSON.pass> {
 
+        public class pass
+        {
+            String respond=null,select=null;
+        }
         @Override
-        protected String doInBackground(String... params) {
-            String get_url = "http://192.168.1.9:80/TrackMe/Check.php";
+        protected pass doInBackground(String... params) {
+            String get_url = "http://192.168.0.108:80/TrackMe/Check.php";
             String ID = params[0];
+            String option = params[1];
 
             try {
                 URL url = new URL(get_url);
@@ -456,7 +482,10 @@ public class TrackFleet extends AppCompatActivity
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-                return response;
+                pass p = new pass();
+                p.respond = response;
+                p.select = option;
+                return p;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -466,13 +495,13 @@ public class TrackFleet extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(String args)
+        protected void onPostExecute(pass args)
         {
             try
             {
-                JSONObject obj = new JSONObject(args);
+                JSONObject obj = new JSONObject(args.respond);
                 String json = obj.getString("jsonstring");
-                Log.e("string",args);
+                Log.e("string",args.respond);
 
                 switch (json)
                 {
@@ -483,7 +512,9 @@ public class TrackFleet extends AppCompatActivity
                     case "yes":     //This is executed if ID entered exists in database
                         markersArray = new ArrayList<LatLng>();
                         JSONArray arr = obj.getJSONArray("response");
-                        for (int i = 0; i < arr.length(); i++)
+                        int l = arr.length();
+                        int start = l - 2 * (Integer.parseInt(args.select)+1);
+                        for (int i = start; i < l; i++)
                         {
                             JSONObject object = new JSONObject(arr.getString(i));
                             String latitude = object.getString("Lat");

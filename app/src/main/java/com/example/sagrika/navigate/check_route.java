@@ -1,5 +1,6 @@
 package com.example.sagrika.navigate;
 
+//This is a fragment which opens inside TrackFleet activity and displays the route for the shipment to be tracked
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -24,8 +25,7 @@ import java.util.ArrayList;
 
 public class check_route extends Fragment implements OnMapReadyCallback
 {
-    ArrayList<LatLng> route;     //contains a list of markers
-    String ID;
+    ArrayList<LatLng> route;     //contains a list of markers of the locations
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -40,7 +40,7 @@ public class check_route extends Fragment implements OnMapReadyCallback
 
         route= new ArrayList<LatLng>();
 
-        //Initialises 'markersArray' from ArrayList passed from the precceeding activity
+        //Initialises 'markersArray' from ArrayList passed from the preceeding activity
         Bundle bundle = getArguments();
         route = bundle.getParcelableArrayList("route");
 

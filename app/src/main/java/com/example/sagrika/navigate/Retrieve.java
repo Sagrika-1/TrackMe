@@ -23,7 +23,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 //AsyncTask to verify the credentials of the manager entered in Manager Login Page
-// and redirect to TrackPage if correct credentials are entered
+// and redirect to Tracking Page if correct credentials are entered
 public class Retrieve extends AsyncTask<String, Void, String> {
 
    String login_name, method,login_pass;
@@ -40,7 +40,7 @@ public class Retrieve extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params)
     {
-        String login_url = "http://192.168.1.9:80/TrackMe/login.php";
+        String login_url = "http://192.168.0.108:80/TrackMe/login.php";
         method = params[0];
          if (method.equals("login"))
          {
@@ -102,7 +102,7 @@ public class Retrieve extends AsyncTask<String, Void, String> {
                 case "us":      //If username entered is wronf this case is executed
                     Toast.makeText(ctx, " Username doesn't exist", Toast.LENGTH_SHORT).show();
                     break;
-                case "go":      //If correct credentials are entered SpinnerJSON is executed to redirect to TrackPage
+                case "go":      //If correct credentials are entered SpinnerJSON is executed to redirect to Tracking Page
                     SpinnerJSON spinnerJSON = new SpinnerJSON(ctx);
                     spinnerJSON.execute(login_name,login_pass);
                     break;
